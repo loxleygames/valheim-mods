@@ -1,0 +1,9 @@
+{
+  "name": "QuickStash",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/quickstash",
+  "description": "One key stashes your inventory into nearby chests that already hold each item. Multiplayer-safe.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350"
+  ]
+}

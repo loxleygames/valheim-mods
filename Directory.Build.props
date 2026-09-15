@@ -10,7 +10,6 @@
     <ManagedDir>$(ValheimDir)/valheim_Data/Managed</ManagedDir>
     <ProfileDir>$(HOME)/.config/r2modmanPlus-local/Valheim/profiles/Default</ProfileDir>
     <BepInExDir>$(ProfileDir)/BepInEx</BepInExDir>
-    <PluginOut>$(BepInExDir)/plugins/$(AssemblyName)</PluginOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,11 +27,18 @@
     <Reference Include="UnityEngine"><HintPath>$(ManagedDir)/UnityEngine.dll</HintPath></Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)/UnityEngine.CoreModule.dll</HintPath></Reference>
     <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(ManagedDir)/UnityEngine.PhysicsModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(ManagedDir)/UnityEngine.UI.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.UIModule"><HintPath>$(ManagedDir)/UnityEngine.UIModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(ManagedDir)/UnityEngine.InputLegacyModule.dll</HintPath></Reference>
+    <Reference Include="Unity.TextMeshPro"><HintPath>$(ManagedDir)/Unity.TextMeshPro.dll</HintPath></Reference>
     <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(ManagedDir)/UnityEngine.AssetBundleModule.dll</HintPath></Reference>
   </ItemGroup>
 
   <!-- Drop the built DLL straight into the r2modman profile so launching the game tests it -->
   <Target Name="Deploy" AfterTargets="Build">
+    <PropertyGroup>
+      <PluginOut>$(BepInExDir)/plugins/$(AssemblyName)</PluginOut>
+    </PropertyGroup>
     <MakeDir Directories="$(PluginOut)" />
     <Copy SourceFiles="$(OutDir)/$(AssemblyName).dll" DestinationFolder="$(PluginOut)" />
   </Target>
