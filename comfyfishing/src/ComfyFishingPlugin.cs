@@ -52,10 +52,11 @@ namespace ComfyFishing
             PrefabManager.OnVanillaPrefabsAvailable -= AddRods;
         }
 
-        private void AddRod(string name, int tier, string display, string desc, string station, int level, params (string item, int amount)[] cost)
+        /// Crafted rods wear out (one point per cast) and upgrade to quality 4 at their station.
+        private void AddRod(string name, int tier, string display, string desc, string station, int level, float durability, params (string item, int amount, int perLevel)[] cost)
         {
             var reqs = new List<RequirementConfig>();
-            foreach (var (item, amount) in cost) reqs.Add(new RequirementConfig(item, amount, 0, true));
+            foreach (var (item, amount, perLevel) in cost) reqs.Add(new RequirementConfig(item, amount, perLevel, true));
             var rod = new CustomItem(name, "FishingRod", new ItemConfig
             {
                 Name = display,
@@ -64,6 +65,12 @@ namespace ComfyFishing
                 MinStationLevel = level,
                 Requirements = reqs.ToArray(),
             });
+            var shared = rod.ItemDrop.m_itemData.m_shared;
+            shared.m_useDurability = true;
+            shared.m_maxDurability = durability;
+            shared.m_durabilityPerLevel = durability * 0.5f;
+            shared.m_useDurabilityDrain = 1f;
+            shared.m_maxQuality = 4;
             ItemManager.Instance.AddItem(rod);
             Rods.Tiers[name] = tier;
         }

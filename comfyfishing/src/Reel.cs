@@ -61,6 +61,8 @@ namespace ComfyFishing
                 float skill = owner.GetSkillFactor(Skills.SkillType.Fishing);
                 float speed = Mathf.Lerp(ComfyFishingPlugin.ReelSpeed.Value, ComfyFishingPlugin.ReelSpeedMaxSkill.Value, skill);
                 speed *= 1f + 0.2f * (Rods.TierOf(owner) - 1);
+                var rod = (owner as Humanoid)?.GetCurrentWeapon();
+                if (rod != null) speed *= 1f + 0.1f * (rod.m_quality - 1); // upgrades reel faster too
                 var drop = fish.GetComponent<ItemDrop>();
                 int quality = drop ? drop.m_itemData.m_quality : 1;
                 speed /= 1f + 0.15f * (quality - 1); // big fish take longer, they don't take stamina

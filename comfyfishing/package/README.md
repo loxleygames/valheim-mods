@@ -25,13 +25,13 @@ Under-levelled? It bites, you're told it's too strong for you, and it swims off.
 
 Three new rods above Haldor's, all craftable:
 
-| Rod | Where | Cost |
-|---|---|---|
-| Bone fishing rod | Workbench 2 | 10 Fine wood, 4 Bone fragments, 5 Resin |
-| Silver fishing rod | Forge 2 | 10 Fine wood, 4 Silver, 2 Guck |
-| Black metal fishing rod | Forge 3 | 10 Fine wood, 5 Black metal, 5 Linen thread |
+| Rod | Where | Cost | Durability |
+|---|---|---|---|
+| Bone fishing rod | Workbench 2 | 10 Fine wood, 4 Bone fragments, 5 Resin | 100 |
+| Silver fishing rod | Forge 2 | 10 Fine wood, 4 Silver, 2 Guck | 150 |
+| Black metal fishing rod | Forge 3 | 10 Fine wood, 5 Black metal, 5 Linen thread | 200 |
 
-Each tier also reels 20% faster.
+Each tier reels 20% faster. Crafted rods **wear one point per cast** and can be **upgraded to level 4** at their station: each level adds durability and another 10% reel speed. Haldor's rod never wears but stays slow — that's the trade.
 
 ## Config
 
