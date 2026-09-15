@@ -36,7 +36,7 @@ namespace InventoryReforged
             StashPlayerBuiltOnly = Config.Bind("Stash", "PlayerBuiltOnly", true, "Ignore chests you didn't build (dungeon chests, etc).");
             StashButton = Config.Bind("Stash", "ShowButton", true, "Add a Stash button to the inventory screen.");
             StashButtonX = Config.Bind("Stash", "ButtonX", 33f, "Button centre, relative to the bottom-right corner of the inventory panel.");
-            StashButtonY = Config.Bind("Stash", "ButtonY", 4f, "Button centre, relative to the bottom-right corner of the inventory panel.");
+            StashButtonY = Config.Bind("Stash", "ButtonY", 8f, "Button centre, relative to the bottom-right corner of the inventory panel.");
             StashButtonSize = Config.Bind("Stash", "ButtonSize", 38f, "Button width and height (px).");
             SharedChests = Config.Bind("SharedChests", "Enabled", true, "Let more than one player use a chest at the same time. Everyone needs the mod.");
             ArmourSlots = Config.Bind("ArmourSlots", "Enabled", true, "Extra row with head / chest / legs / cape slots.");

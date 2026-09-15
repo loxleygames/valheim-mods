@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace InventoryReforged
 {
@@ -20,8 +21,10 @@ namespace InventoryReforged
             ItemDrop.ItemData.ItemType.Chest,
             ItemDrop.ItemData.ItemType.Legs,
             ItemDrop.ItemData.ItemType.Shoulder,
+            ItemDrop.ItemData.ItemType.Utility,
         };
-        static readonly string[] Labels = { "Head", "Chest", "Legs", "Cape" };
+        static readonly string[] Labels = { "Head", "Chest", "Legs", "Cape", "Util" };
+        static readonly Color SlotTint = new Color(0.85f, 0.7f, 0.45f, 1f);
 
         static readonly AccessTools.FieldRef<Inventory, int> Height = AccessTools.FieldRefAccess<Inventory, int>("m_height");
         static readonly AccessTools.FieldRef<InventoryGrid, List<InventoryElement>> Elements = AccessTools.FieldRefAccess<InventoryGrid, List<InventoryElement>>("m_elements");
@@ -154,6 +157,18 @@ namespace InventoryReforged
         }
 
         /// Label the slots and hide the unused cells once the grid builds the row.
+        /// Warm tint on the cell background so the row reads as equipment, not storage.
+        static void Tint(InventoryElement el)
+        {
+            var img = el.GetComponent<Image>();
+            if (!img)
+            {
+                var bkg = el.transform.Find("bkg") ?? el.transform.Find("background");
+                if (bkg) img = bkg.GetComponent<Image>();
+            }
+            if (img) img.color = SlotTint;
+        }
+
         [HarmonyPatch(typeof(InventoryGrid), "UpdateGui")]
         static class DressRow
         {
@@ -173,9 +188,19 @@ namespace InventoryReforged
                     var label = el.transform.Find("binding")?.GetComponent<TMP_Text>();
                     if (label && !label.enabled)
                     {
+                        // The binding label is sized for one digit; let it span the cell and never wrap.
                         label.enabled = true;
                         label.text = Labels[el.Position.x];
                         label.fontSize *= 0.8f;
+                        label.enableWordWrapping = false;
+                        label.overflowMode = TextOverflowModes.Overflow;
+                        label.alignment = TextAlignmentOptions.TopLeft;
+                        var lrt = label.rectTransform;
+                        lrt.anchorMin = new Vector2(0f, 0f);
+                        lrt.anchorMax = new Vector2(1f, 1f);
+                        lrt.offsetMin = new Vector2(4f, 0f);
+                        lrt.offsetMax = new Vector2(0f, -2f);
+                        Tint(el);
                     }
                 }
             }
