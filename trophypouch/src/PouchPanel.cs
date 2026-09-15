@@ -52,6 +52,8 @@ namespace TrophyPouch
             float height = TrophyPouchPlugin.PanelHeight.Value;
             s_panel = GUIManager.Instance.CreateWoodpanel(gui.m_player, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(240f, 0f), 300f, height, false);
             s_panel.name = "TrophyPouchPanel";
+            // Draw before the inventory's own children (tooltip anchor included) so tooltips paint on top of us.
+            s_panel.transform.SetAsFirstSibling();
             // Hang it off the inventory's top-right corner so its top is level with the inventory.
             var prt = s_panel.GetComponent<RectTransform>();
             prt.pivot = new Vector2(0f, 1f);
