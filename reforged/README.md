@@ -1,15 +1,15 @@
 # Inventory Reforged
 
-Four things your inventory should have had. Built for playing with friends, and safe to use with them.
+**Quick stack to nearby chests that works on the current version of the game.** One key sends everything in your bag into the chests around you that already hold it. Favourite what you want to keep.
+
+Built for the 1.0 game and kept current. Also in the box, each switchable in the config:
 
 | | |
 |---|---|
-| **Stash** | One key sends your loot into the nearby chests that already hold it |
+| **Stash** | Quick stack to nearby chests, hotkey or button, with favourites |
 | **Craft from chests** | Workbench, forge, building, smelters, kilns, fires, cooking, fermenters all draw on nearby chests |
 | **Shared chests** | Any number of players can use the same chest at the same time |
 | **Armour slots** | Head / Chest / Legs / Cape / Utility in their own row, still repairable |
-
-Each feature can be switched off in the config.
 
 ---
 
