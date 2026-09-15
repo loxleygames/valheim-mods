@@ -19,6 +19,19 @@ namespace Moorings
             MakeCoil();
         }
 
+        /// Measured from the post's mesh so the coil sits on the wood whatever pole the prefab is.
+        private Bounds LocalBounds()
+        {
+            var mf = GetComponentInChildren<MeshFilter>();
+            if (mf && mf.sharedMesh) return mf.sharedMesh.bounds;
+            return new Bounds(new Vector3(0f, 1f, 0f), new Vector3(0.3f, 2f, 0.3f));
+        }
+
+        private float PostRadius() { var b = LocalBounds(); return Mathf.Max(b.extents.x, b.extents.z); }
+
+        public float TieHeight() =>
+            MooringsPlugin.LineHeight.Value >= 0f ? MooringsPlugin.LineHeight.Value : LocalBounds().max.y - 0.25f;
+
         /// A few turns of rope around the post where the line ties on, drawn as a helix.
         private void MakeCoil()
         {
@@ -33,8 +46,8 @@ namespace Moorings
             if (renderer) coil.material = renderer.sharedMaterial;
 
             const int turns = 4, perTurn = 32;
-            float r = MooringsPlugin.CoilRadius.Value;
-            float h = MooringsPlugin.LineHeight.Value;
+            float r = MooringsPlugin.CoilRadius.Value > 0f ? MooringsPlugin.CoilRadius.Value : PostRadius() + 0.03f;
+            float h = TieHeight();
             float pitch = 0.055f;
             coil.positionCount = turns * perTurn + 1;
             for (int i = 0; i <= turns * perTurn; i++)
@@ -113,7 +126,7 @@ namespace Moorings
             }
             if (!m_line) m_line = MakeLine();
             m_line.enabled = true;
-            m_line.SetPosition(0, transform.position + Vector3.up * MooringsPlugin.LineHeight.Value);
+            m_line.SetPosition(0, transform.position + Vector3.up * TieHeight());
             m_line.SetPosition(1, ship.transform.position + Vector3.up * 0.5f);
         }
 

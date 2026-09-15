@@ -33,10 +33,10 @@ namespace Moorings
             Pull = Config.Bind("General", "Pull", 6f,
                 "Strength of the pull back toward the post once past the slack.");
 
-            LineHeight = Config.Bind("General", "LineHeight", 0.7f,
-                "How high up the post (m) the line is tied.");
-            CoilRadius = Config.Bind("General", "CoilRadius", 0.17f,
-                "Radius (m) of the rope coiled round the post. Match it to the post's thickness.");
+            LineHeight = Config.Bind("General", "LineHeight", -1f,
+                "How high up the post (m) the line is tied. -1 = just below the top of the post.");
+            CoilRadius = Config.Bind("General", "CoilRadius", -1f,
+                "Radius (m) of the rope coiled round the post. -1 = measured from the post.");
 
             PrefabManager.OnVanillaPrefabsAvailable += AddMooringPost;
             new Harmony(PluginGUID).PatchAll();
