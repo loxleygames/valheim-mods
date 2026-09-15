@@ -82,23 +82,22 @@ namespace Hourglass
             var wood = MaterialOf("wood_pole2") ?? MaterialOf("guard_stone");
             var glass = MaterialOf("crystal_wall_1x1") ?? wood;
             var sand = MaterialOf("piece_beehive") ?? wood;
-            Debug.Log($"[Hourglass] wood={Describe(wood)} glass={Describe(glass)} sand={Describe(sand)} rootScale={prefab.transform.localScale} rootRot={prefab.transform.localRotation.eulerAngles}");
 
             var root = new GameObject("hourglass");
             root.transform.SetParent(prefab.transform, false);
             root.layer = prefab.layer;
 
             Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.04f, 0f), new Vector3(0.54f, 0.04f, 0.54f), wood);
-            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.86f, 0f), new Vector3(0.54f, 0.04f, 0.54f), wood);
-            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.905f, 0f), new Vector3(0.16f, 0.015f, 0.16f), wood);
+            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.80f, 0f), new Vector3(0.54f, 0.04f, 0.54f), wood);
+            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.845f, 0f), new Vector3(0.16f, 0.015f, 0.16f), wood);
             for (int i = 0; i < 3; i++)
             {
                 float a = i * Mathf.PI * 2f / 3f;
-                Part(root, PrimitiveType.Cylinder, new Vector3(Mathf.Cos(a) * 0.21f, 0.45f, Mathf.Sin(a) * 0.21f), new Vector3(0.05f, 0.37f, 0.05f), wood);
+                Part(root, PrimitiveType.Cylinder, new Vector3(Mathf.Cos(a) * 0.21f, 0.42f, Mathf.Sin(a) * 0.21f), new Vector3(0.05f, 0.34f, 0.05f), wood);
             }
-            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.18f, 0f), new Vector3(0.24f, 0.16f, 0.24f), sand);
-            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.27f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
-            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.63f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.21f, 0f), new Vector3(0.24f, 0.16f, 0.24f), sand);
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.30f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.54f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
         }
 
         static string Describe(Material m) => m ? $"{m.name}/{m.shader.name}/tex={(m.mainTexture ? m.mainTexture.name : "none")}" : "null";
