@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Moorings
 {
     public class MooringPost : MonoBehaviour, Interactable, Hoverable
     {
+        public static readonly List<MooringPost> All = new List<MooringPost>();
+
         private ZNetView m_nview;
         private LineRenderer m_line;
 
@@ -12,7 +15,10 @@ namespace Moorings
             m_nview = GetComponent<ZNetView>();
             var wnt = GetComponent<WearNTear>();
             if (wnt) wnt.m_onDestroyed += OnPostDestroyed;
+            All.Add(this);
         }
+
+        private void OnDestroy() => All.Remove(this);
 
         private void OnPostDestroyed()
         {
@@ -20,14 +26,7 @@ namespace Moorings
             if (ship) Mooring.Release(ship.GetComponent<ZNetView>());
         }
 
-        private Ship GetMooredShip()
-        {
-            if (!m_nview || !m_nview.IsValid()) return null;
-            var id = m_nview.GetZDO().GetZDOID(Mooring.PostShipKey);
-            if (id == ZDOID.None) return null;
-            var go = ZNetScene.instance.FindInstance(id);
-            return go ? go.GetComponent<Ship>() : null;
-        }
+        private Ship GetMooredShip() => Mooring.FindShip(Mooring.LinkOf(m_nview));
 
         public bool Interact(Humanoid user, bool hold, bool alt)
         {
@@ -39,6 +38,12 @@ namespace Moorings
                 Mooring.Release(moored.GetComponent<ZNetView>());
                 user.Message(MessageHud.MessageType.Center, "Cast off");
                 return true;
+            }
+            if (Mooring.LinkOf(m_nview) != 0)
+            {
+                // Tied to a boat that isn't loaded (or is gone). Let go of the line.
+                m_nview.ClaimOwnership();
+                m_nview.GetZDO().Set(Mooring.LinkHash, 0);
             }
 
             var ship = Mooring.FindNearestShip(transform.position, MooringsPlugin.MoorRange.Value);

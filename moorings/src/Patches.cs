@@ -30,6 +30,8 @@ namespace Moorings
     [HarmonyPatch(typeof(Ship), nameof(Ship.CustomFixedUpdate))]
     static class Ship_CustomFixedUpdate_Patch
     {
+        static readonly System.Collections.Generic.Dictionary<Ship, (float last, int misses)> s_postCheck = new System.Collections.Generic.Dictionary<Ship, (float, int)>();
+
         static void Postfix(Ship __instance, float fixedDeltaTime)
         {
             if (!__instance.IsOwner()) return;
@@ -38,16 +40,19 @@ namespace Moorings
             var zdo = nview.GetZDO();
             if (!Mooring.IsMoored(zdo)) return;
 
-            // Post gone from the world (destroyed while we were away)? Let the boat go.
-            if (ZDOMan.instance.GetZDO(zdo.GetZDOID(Mooring.ShipPostKey)) == null)
+            // Post gone (destroyed while we were away)? Give it a few seconds to load in, then let the boat go.
+            s_postCheck.TryGetValue(__instance, out var check);
+            if (Time.time - check.last > 2f)
             {
-                Mooring.Release(nview);
-                return;
+                check.last = Time.time;
+                check.misses = Mooring.FindPost(zdo.GetInt(Mooring.LinkHash, 0)) ? 0 : check.misses + 1;
+                s_postCheck[__instance] = check;
+                if (check.misses >= 5) { s_postCheck.Remove(__instance); Mooring.Release(nview); return; }
             }
 
             var body = __instance.GetComponent<Rigidbody>();
             if (!body) return;
-            Vector3 toPost = zdo.GetVec3(Mooring.ShipPointHash, __instance.transform.position) - __instance.transform.position;
+            Vector3 toPost = zdo.GetVec3(Mooring.PointHash, __instance.transform.position) - __instance.transform.position;
             toPost.y = 0f;
             float dist = toPost.magnitude;
             float slack = MooringsPlugin.Slack.Value;

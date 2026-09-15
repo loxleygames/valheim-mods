@@ -14,7 +14,7 @@ namespace Moorings
     {
         public const string PluginGUID = "games.loxley.moorings";
         public const string PluginName = "Moorings";
-        public const string PluginVersion = "0.1.0";
+        public const string PluginVersion = "0.1.1";
 
         public const string PrefabName = "MooringPost";
 
