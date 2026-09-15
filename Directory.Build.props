@@ -36,10 +36,13 @@
     <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(ManagedDir)/UnityEngine.AssetBundleModule.dll</HintPath></Reference>
   </ItemGroup>
 
-  <!-- Drop the built DLL straight into the r2modman profile so launching the game tests it -->
+  <!-- Drop the built DLL straight into the r2modman profile so launching the game tests it.
+       If r2modman has installed the published mod (plugins/Loxley-<Name>), overwrite that copy so the
+       two never coexist; otherwise use a plain drop-in folder. -->
   <Target Name="Deploy" AfterTargets="Build">
     <PropertyGroup>
       <PluginOut>$(BepInExDir)/plugins/$(AssemblyName)</PluginOut>
+      <PluginOut Condition="Exists('$(BepInExDir)/plugins/Loxley-$(AssemblyName)')">$(BepInExDir)/plugins/Loxley-$(AssemblyName)</PluginOut>
     </PropertyGroup>
     <MakeDir Directories="$(PluginOut)" />
     <Copy SourceFiles="$(OutDir)/$(AssemblyName).dll" DestinationFolder="$(PluginOut)" />
