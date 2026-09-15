@@ -183,11 +183,17 @@ namespace TrophyPouch
             }
         }
 
+        /// Runs before other mods' RemoveItem patches (craft-from-chests re-enters RemoveItem) and only at
+        /// the outermost call, so the pouch is drawn on once per consumption.
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RemoveItem), typeof(string), typeof(int), typeof(int), typeof(bool))]
         static class PoolRemove
         {
+            static int s_depth;
+
+            [HarmonyPriority(Priority.First)]
             static void Prefix(Inventory __instance, string name, ref int amount)
             {
+                if (s_depth++ > 0) return;
                 if (!IsLocal(__instance) || amount <= 0 || Count(name) == 0) return;
                 // Bag first (vanilla will take those), then the pouch covers the rest.
                 Bypass = true;
@@ -197,6 +203,8 @@ namespace TrophyPouch
                 int fromPouch = Mathf.Max(0, amount - inBag);
                 if (fromPouch > 0) { Remove(name, fromPouch); amount -= fromPouch; }
             }
+
+            static void Postfix() => s_depth--;
         }
     }
 }
