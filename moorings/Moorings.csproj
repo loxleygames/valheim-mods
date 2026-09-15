@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Moorings</AssemblyName>
+    <RootNamespace>Moorings</RootNamespace>
+  </PropertyGroup>
+</Project>

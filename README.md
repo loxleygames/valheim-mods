@@ -1,20 +1,9 @@
-# Moorings
+# Valheim mods
 
-Valheim mod. Adds a **Mooring post** (Hammer → Misc, 6 Wood + 2 Resin at a Workbench).
+One folder per mod. Each builds with `dotnet build -c Release` and deploys itself into the r2modman `Default` profile; `./build-package.sh` in a mod folder zips a Thunderstore package into `dist/`.
 
-Interact with it to tie the nearest boat (within 12m). While moored the boat:
+Paths to the Steam install and BepInEx live in `Directory.Build.props`.
 
-- takes no damage from anything — wave slams, rocks, docks, rain, Ashlands
-- still rides the waves, but gets pulled back if it drifts more than 3m from the post
-
-Interact again to cast off, or just take the rudder and push forward.
-
-Requires BepInEx + Jötunn.
-
-## Build
-
-```
-dotnet build -c Release
-```
-
-Builds against the Steam install and copies the DLL into the r2modman `Default` profile's `BepInEx/plugins/Moorings/`.
+| Mod | What |
+|-----|------|
+| [moorings](moorings/) | Mooring post — tie a boat to it and it can't be damaged |

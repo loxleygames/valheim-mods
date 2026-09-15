@@ -1,7 +1,7 @@
 {
   "name": "Moorings",
   "version_number": "0.1.0",
-  "website_url": "https://github.com/loxleygames/moorings",
+  "website_url": "https://github.com/loxleygames/valheim",
   "description": "Mooring post: tie a boat to it and it can't be damaged by storms, rocks or docks.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2350",

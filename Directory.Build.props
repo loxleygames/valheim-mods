@@ -1,0 +1,39 @@
+<Project>
+  <!-- Shared by every mod in this repo. Paths point at the Steam install and the r2modman Default profile. -->
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ValheimDir>$(HOME)/.steam/steam/steamapps/common/Valheim</ValheimDir>
+    <ManagedDir>$(ValheimDir)/valheim_Data/Managed</ManagedDir>
+    <ProfileDir>$(HOME)/.config/r2modmanPlus-local/Valheim/profiles/Default</ProfileDir>
+    <BepInExDir>$(ProfileDir)/BepInEx</BepInExDir>
+    <PluginOut>$(BepInExDir)/plugins/$(AssemblyName)</PluginOut>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src/**/*.cs" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BepInEx"><HintPath>$(BepInExDir)/core/BepInEx.dll</HintPath></Reference>
+    <Reference Include="0Harmony"><HintPath>$(BepInExDir)/core/0Harmony.dll</HintPath></Reference>
+    <Reference Include="Jotunn"><HintPath>$(BepInExDir)/plugins/ValheimModding-Jotunn/Jotunn.dll</HintPath></Reference>
+    <Reference Include="assembly_valheim"><HintPath>$(ManagedDir)/assembly_valheim.dll</HintPath></Reference>
+    <Reference Include="assembly_utils"><HintPath>$(ManagedDir)/assembly_utils.dll</HintPath></Reference>
+    <Reference Include="assembly_guiutils"><HintPath>$(ManagedDir)/assembly_guiutils.dll</HintPath></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)/UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)/UnityEngine.CoreModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(ManagedDir)/UnityEngine.PhysicsModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(ManagedDir)/UnityEngine.AssetBundleModule.dll</HintPath></Reference>
+  </ItemGroup>
+
+  <!-- Drop the built DLL straight into the r2modman profile so launching the game tests it -->
+  <Target Name="Deploy" AfterTargets="Build">
+    <MakeDir Directories="$(PluginOut)" />
+    <Copy SourceFiles="$(OutDir)/$(AssemblyName).dll" DestinationFolder="$(PluginOut)" />
+  </Target>
+</Project>
