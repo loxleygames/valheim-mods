@@ -30,8 +30,44 @@ namespace Gungnir
     /// Where the spear came from, remembered from the moment it left the hand.
     public class ThrowOrigin : MonoBehaviour
     {
+        public static readonly System.Collections.Generic.List<ThrowOrigin> InFlight = new System.Collections.Generic.List<ThrowOrigin>();
         public Vector2i Slot;
         public bool WasEquipped;
+        void OnEnable() => InFlight.Add(this);
+        void OnDisable() => InFlight.Remove(this);
+    }
+
+    /// Quitting with a spear in the air would lose it (projectiles aren't saved). Put it back in the bag first.
+    [HarmonyPatch(typeof(Game), "Shutdown")]
+    static class RecallOnShutdown
+    {
+        static void Prefix() => Recall();
+
+        public static void Recall()
+        {
+            var player = Player.m_localPlayer;
+            if (!player) return;
+            foreach (var t in ThrowOrigin.InFlight.ToArray())
+            {
+                if (!t) continue;
+                var p = t.GetComponent<Projectile>();
+                var item = p ? p.m_spawnItem : null;
+                if (item == null) continue;
+                var inv = player.GetInventory();
+                if (inv.GetItemAt(t.Slot.x, t.Slot.y) == null ? inv.AddItem(item, t.Slot) : inv.AddItem(item))
+                {
+                    p.m_spawnItem = null;
+                    var nview = p.GetComponent<ZNetView>();
+                    if (nview && nview.IsValid()) nview.Destroy(); else Object.Destroy(p.gameObject);
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Game), "ContinueLogout")]
+    static class RecallOnLogout
+    {
+        static void Prefix() => RecallOnShutdown.Recall();
     }
 
     /// Sits on the dropped spear and brings it home.
