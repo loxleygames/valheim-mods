@@ -111,31 +111,66 @@ namespace InventoryReforged
             }
         }
 
-        // Auto-placement (pickups, take all, stash, crafting output) must never land in the armour row.
-        // These vanilla helpers scan m_height rows; shrink it to the main grid while they run.
-        static class MainGridOnly
+        // Auto-placement (pickups, take all, stash, crafting output) must never land in the armour row,
+        // and free-space maths must count only the main grid: its slots, and only the items in it.
+        static readonly AccessTools.FieldRef<Inventory, List<ItemDrop.ItemData>> Items = AccessTools.FieldRefAccess<Inventory, List<ItemDrop.ItemData>>("m_inventory");
+
+        static int MainFreeSlots(Inventory inv)
         {
-            public static void Prefix(Inventory __instance, ref int __state)
+            int row = RowOf(inv), used = 0;
+            foreach (var it in Items(inv)) if (it.m_gridPos.y < row) used++;
+            return inv.GetWidth() * row - used;
+        }
+
+        [HarmonyPatch(typeof(Inventory), "FindEmptySlot")]
+        static class SlotSearchMainGridOnly
+        {
+            static void Prefix(Inventory __instance, ref int __state)
             {
                 __state = -1;
                 if (!IsLocal(__instance)) return;
                 __state = Height(__instance);
                 Height(__instance) = __state - 1;
             }
-            public static void Postfix(Inventory __instance, int __state)
+            static void Postfix(Inventory __instance, int __state)
             {
                 if (__state >= 0) Height(__instance) = __state;
             }
         }
 
-        [HarmonyPatch(typeof(Inventory), "FindEmptySlot")]
-        static class Gate1 { static void Prefix(Inventory __instance, ref int __state) => MainGridOnly.Prefix(__instance, ref __state); static void Postfix(Inventory __instance, int __state) => MainGridOnly.Postfix(__instance, __state); }
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.GetEmptySlots))]
-        static class Gate2 { static void Prefix(Inventory __instance, ref int __state) => MainGridOnly.Prefix(__instance, ref __state); static void Postfix(Inventory __instance, int __state) => MainGridOnly.Postfix(__instance, __state); }
+        static class CountMainGrid
+        {
+            static bool Prefix(Inventory __instance, ref int __result)
+            {
+                if (!IsLocal(__instance)) return true;
+                __result = MainFreeSlots(__instance);
+                return false;
+            }
+        }
+
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.HaveEmptySlot))]
-        static class Gate3 { static void Prefix(Inventory __instance, ref int __state) => MainGridOnly.Prefix(__instance, ref __state); static void Postfix(Inventory __instance, int __state) => MainGridOnly.Postfix(__instance, __state); }
+        static class HaveMainGridSlot
+        {
+            static bool Prefix(Inventory __instance, ref bool __result)
+            {
+                if (!IsLocal(__instance)) return true;
+                __result = MainFreeSlots(__instance) > 0;
+                return false;
+            }
+        }
+
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.CanAddItem), typeof(ItemDrop.ItemData), typeof(int))]
-        static class Gate4 { static void Prefix(Inventory __instance, ref int __state) => MainGridOnly.Prefix(__instance, ref __state); static void Postfix(Inventory __instance, int __state) => MainGridOnly.Postfix(__instance, __state); }
+        static class CanAddToMainGrid
+        {
+            static bool Prefix(Inventory __instance, ItemDrop.ItemData item, int stack, ref bool __result)
+            {
+                if (!IsLocal(__instance)) return true;
+                if (stack <= 0) stack = item.m_stack;
+                __result = __instance.FindFreeStackSpace(item.m_shared.m_name, item.m_worldLevel) + MainFreeSlots(__instance) * item.m_shared.m_maxStackSize >= stack;
+                return false;
+            }
+        }
 
         /// Only the right kind of armour may be dropped on a slot; dropping it there equips it.
         [HarmonyPatch(typeof(InventoryGrid), nameof(InventoryGrid.DropItem))]
