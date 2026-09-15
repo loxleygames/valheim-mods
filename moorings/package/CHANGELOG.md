@@ -1,3 +1,6 @@
+# 0.1.2
+- Slack now scales with hull length, so a longship isn't dragged up the beach. Slack in the config is measured from the boat's nearest end.
+
 # 0.1.1
 - Post is now a log bollard with rope coiled round the top.
 - Fixed moorings breaking after a world reload (boat showed as moored, rope gone, couldn't cast off). Post and boat are now linked by a shared tag rather than object IDs, which the game reassigns on load. Boats moored before this update need tying again.

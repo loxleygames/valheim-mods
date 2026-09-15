@@ -14,7 +14,7 @@ namespace Moorings
     {
         public const string PluginGUID = "games.loxley.moorings";
         public const string PluginName = "Moorings";
-        public const string PluginVersion = "0.1.1";
+        public const string PluginVersion = "0.1.2";
 
         public const string PrefabName = "MooringPost";
 
@@ -29,7 +29,7 @@ namespace Moorings
             MoorRange = Config.Bind("General", "MoorRange", 12f,
                 "How far (m) a boat can be from the post and still be tied to it.");
             Slack = Config.Bind("General", "Slack", 3f,
-                "How far (m) a moored boat can drift from the post before the line pulls it back.");
+                "How far (m) the nearest end of a moored boat can drift from the post before the line pulls it back. Half the hull length is added automatically.");
             Pull = Config.Bind("General", "Pull", 6f,
                 "Strength of the pull back toward the post once past the slack.");
 

@@ -55,7 +55,9 @@ namespace Moorings
             Vector3 toPost = zdo.GetVec3(Mooring.PointHash, __instance.transform.position) - __instance.transform.position;
             toPost.y = 0f;
             float dist = toPost.magnitude;
-            float slack = MooringsPlugin.Slack.Value;
+            // Slack is measured from the hull's centre, so add half its length: a longship gets more line than a raft.
+            float halfLength = __instance.m_floatCollider ? __instance.m_floatCollider.size.z * __instance.m_floatCollider.transform.lossyScale.z * 0.5f : 3f;
+            float slack = MooringsPlugin.Slack.Value + halfLength;
             if (dist > slack)
             {
                 body.AddForce(toPost.normalized * (dist - slack) * MooringsPlugin.Pull.Value, ForceMode.Acceleration);
