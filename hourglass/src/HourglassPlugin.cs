@@ -42,6 +42,7 @@ namespace Hourglass
             var prefab = PrefabManager.Instance.CreateClonedPrefab(PrefabName, "guard_stone");
             foreach (var area in prefab.GetComponentsInChildren<PrivateArea>(true)) Object.DestroyImmediate(area);
             prefab.AddComponent<HourglassPiece>();
+            HourglassModel.Build(prefab);
 
             PieceManager.Instance.AddPiece(new CustomPiece(prefab, fixReference: true, new PieceConfig
             {
@@ -62,6 +63,55 @@ namespace Hourglass
         }
 
         public static bool IsHeld => ZoneSystem.instance && ZoneSystem.instance.GetGlobalKey(Key);
+    }
+
+    /// An hourglass built from primitives, borrowing the Ward's stone material so it lights like everything else.
+    public static class HourglassModel
+    {
+        public static void Build(GameObject prefab)
+        {
+            var wardRenderer = prefab.GetComponentInChildren<MeshRenderer>(true);
+            var stone = wardRenderer ? wardRenderer.sharedMaterial : null;
+            foreach (var r in prefab.GetComponentsInChildren<MeshRenderer>(true)) r.enabled = false;
+
+            var root = new GameObject("hourglass");
+            root.transform.SetParent(prefab.transform, false);
+            root.layer = prefab.layer;
+
+            var glass = Tint(stone, new Color(1f, 0.85f, 0.55f));
+            var sand = Tint(stone, new Color(0.9f, 0.65f, 0.25f));
+
+            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.04f, 0f), new Vector3(0.52f, 0.08f, 0.52f), stone);
+            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.86f, 0f), new Vector3(0.52f, 0.08f, 0.52f), stone);
+            for (int i = 0; i < 3; i++)
+            {
+                float a = i * Mathf.PI * 2f / 3f;
+                Part(root, PrimitiveType.Cylinder, new Vector3(Mathf.Cos(a) * 0.21f, 0.45f, Mathf.Sin(a) * 0.21f), new Vector3(0.05f, 0.37f, 0.05f), stone);
+            }
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.27f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.63f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.18f, 0f), new Vector3(0.24f, 0.16f, 0.24f), sand);
+        }
+
+        static Material Tint(Material from, Color c)
+        {
+            if (!from) return null;
+            var m = new Material(from);
+            m.color = c;
+            return m;
+        }
+
+        static void Part(GameObject parent, PrimitiveType type, Vector3 pos, Vector3 scale, Material mat)
+        {
+            var go = GameObject.CreatePrimitive(type);
+            Object.DestroyImmediate(go.GetComponent<Collider>());
+            go.name = type.ToString();
+            go.layer = parent.layer;
+            go.transform.SetParent(parent.transform, false);
+            go.transform.localPosition = pos;
+            go.transform.localScale = scale;
+            if (mat) go.GetComponent<MeshRenderer>().sharedMaterial = mat;
+        }
     }
 
     public class HourglassPiece : MonoBehaviour, Interactable, Hoverable
