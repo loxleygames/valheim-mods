@@ -40,7 +40,6 @@ namespace Moorings
             var coil = go.AddComponent<LineRenderer>();
             coil.useWorldSpace = false;
             coil.loop = false;
-            coil.startWidth = coil.endWidth = 0.05f;
             coil.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             var renderer = GetComponentInChildren<MeshRenderer>();
             if (renderer) coil.material = renderer.sharedMaterial;
@@ -49,13 +48,25 @@ namespace Moorings
             float r = MooringsPlugin.CoilRadius.Value > 0f ? MooringsPlugin.CoilRadius.Value : PostRadius() + 0.02f;
             float h = TieHeight();
             float pitch = 0.055f;
-            coil.positionCount = turns * perTurn + 1;
-            for (int i = 0; i <= turns * perTurn; i++)
+            int count = turns * perTurn + 1;
+            float ease = perTurn / 4f; // points over which each end tucks into the wood
+            coil.positionCount = count;
+            for (int i = 0; i < count; i++)
             {
                 float a = i / (float)perTurn * Mathf.PI * 2f;
                 float y = h - (turns * pitch) / 2f + (i / (float)perTurn) * pitch;
-                coil.SetPosition(i, new Vector3(Mathf.Cos(a) * r, y, Mathf.Sin(a) * r));
+                // Ends spiral inward so the rope disappears into the post rather than stopping in the air.
+                float edge = Mathf.Min(i, count - 1 - i) / ease;
+                float tuck = 1f - Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(edge));
+                float rr = r - tuck * 0.05f;
+                coil.SetPosition(i, new Vector3(Mathf.Cos(a) * rr, y, Mathf.Sin(a) * rr));
             }
+            // And thin out over the same stretch.
+            float edgeT = ease / (count - 1);
+            coil.widthCurve = new AnimationCurve(
+                new Keyframe(0f, 0f), new Keyframe(edgeT, 1f), new Keyframe(1f - edgeT, 1f), new Keyframe(1f, 0f));
+            coil.widthMultiplier = 0.05f;
+        }
         }
 
         private void OnDestroy() => All.Remove(this);
