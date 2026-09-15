@@ -95,6 +95,11 @@ namespace Gungnir
     [HarmonyPatch(typeof(ItemDrop), nameof(ItemDrop.DropItem), typeof(ItemDrop.ItemData), typeof(int), typeof(Vector3), typeof(Quaternion))]
     static class AttachReturn
     {
+        public static readonly int OwnerHash = "Gungnir_Owner".GetStableHashCode();
+        public static readonly int SlotXHash = "Gungnir_SlotX".GetStableHashCode();
+        public static readonly int SlotYHash = "Gungnir_SlotY".GetStableHashCode();
+        public static readonly int EquippedHash = "Gungnir_Equipped".GetStableHashCode();
+
         static void Postfix(ItemDrop.ItemData item, ItemDrop __result)
         {
             var p = TagDrop.Current;
@@ -104,6 +109,35 @@ namespace Gungnir
             var r = __result.gameObject.AddComponent<Returning>();
             r.Slot = origin.Slot;
             r.WasEquipped = origin.WasEquipped;
+
+            // Remember on the spear itself, so a throw-then-logout still comes home next session.
+            var nview = __result.GetComponent<ZNetView>();
+            if (nview && nview.IsValid())
+            {
+                var zdo = nview.GetZDO();
+                zdo.Set(OwnerHash, Game.instance.GetPlayerProfile().GetPlayerID());
+                zdo.Set(SlotXHash, origin.Slot.x);
+                zdo.Set(SlotYHash, origin.Slot.y);
+                zdo.Set(EquippedHash, origin.WasEquipped);
+            }
+        }
+    }
+
+    /// A spear that was thrown by this character and never returned: pick up where we left off.
+    [HarmonyPatch(typeof(ItemDrop), "Awake")]
+    static class ReattachOnLoad
+    {
+        static void Postfix(ItemDrop __instance)
+        {
+            if (__instance.GetComponent<Returning>()) return;
+            var nview = __instance.GetComponent<ZNetView>();
+            if (!nview || !nview.IsValid()) return;
+            var zdo = nview.GetZDO();
+            long owner = zdo.GetLong(AttachReturn.OwnerHash, 0L);
+            if (owner == 0L || Game.instance == null || owner != Game.instance.GetPlayerProfile().GetPlayerID()) return;
+            var r = __instance.gameObject.AddComponent<Returning>();
+            r.Slot = new Vector2i(zdo.GetInt(AttachReturn.SlotXHash), zdo.GetInt(AttachReturn.SlotYHash));
+            r.WasEquipped = zdo.GetBool(AttachReturn.EquippedHash);
         }
     }
 }
