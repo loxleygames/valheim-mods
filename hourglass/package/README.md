@@ -12,4 +12,4 @@ Config: `TimeOfDay` — 0.5 is noon, 0.25 dawn, 0.75 dusk.
 
 ## Support
 
-[Ko-fi](https://ko-fi.com/loxleygames) · more at [loxley.games](https://loxley.games)
+If this saved you a night of building by torchlight, you can [buy me a coffee on Ko-fi](https://ko-fi.com/loxleygames). More games and mods at [loxley.games](https://loxley.games).

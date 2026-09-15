@@ -80,4 +80,4 @@ Requires BepInEx. No other dependencies.
 
 ## Support
 
-[Ko-fi](https://ko-fi.com/loxleygames) · more at [loxley.games](https://loxley.games)
+If this saved your loot, you can [buy me a coffee on Ko-fi](https://ko-fi.com/loxleygames). More games and mods at [loxley.games](https://loxley.games).
