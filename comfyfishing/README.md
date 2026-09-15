@@ -6,7 +6,7 @@ Haldor's rod is what it always was: the stamina tug-of-war. Craft a better rod a
 
 ## Bait
 
-Fishing bait is craftable by hand, no station: 2 Neck tails → 10 bait, so you don't need Haldor to start. The biome baits are vanilla (20 bait + a trophy at the Cauldron).
+Fishing bait is craftable at the Cauldron: 2 Neck tails → 10 bait, so you don't need Haldor to start. The biome baits are vanilla (20 bait + a trophy at the Cauldron).
 
 ## Tiers
 
