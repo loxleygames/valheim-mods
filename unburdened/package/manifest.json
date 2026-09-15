@@ -1,0 +1,9 @@
+{
+  "name": "Unburdened",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/unburdened",
+  "description": "Armour no longer slows you down. Removes the movement speed penalty from armour; bonuses kept. Configurable.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350"
+  ]
+}
