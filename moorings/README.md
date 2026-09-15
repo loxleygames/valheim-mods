@@ -18,3 +18,7 @@ dotnet build -c Release
 ```
 
 Builds against the Steam install and copies the DLL into the r2modman `Default` profile's `BepInEx/plugins/Moorings/`.
+
+## Support
+
+If this saved your longship, you can [buy me a coffee on Ko-fi](https://ko-fi.com/loxleygames). More games and mods at [loxley.games](https://loxley.games).
