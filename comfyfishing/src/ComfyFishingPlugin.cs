@@ -46,11 +46,11 @@ namespace ComfyFishing
         private void AddRods()
         {
             AddRod("RodBone", 2, "Bone fishing rod", "Sturdier than Haldor's. Takes swamp, cave and ocean bait. Wears with use.",
-                CraftingStations.Workbench, 2, 100f, ("FineWood", 10, 5), ("BoneFragments", 4, 2), ("Resin", 5, 2));
+                new Color(0.95f, 0.9f, 0.78f), CraftingStations.Workbench, 2, 100f, ("FineWood", 10, 5), ("BoneFragments", 4, 2), ("Resin", 5, 2));
             AddRod("RodSilver", 3, "Silver fishing rod", "Light and true. Takes plains and mistlands bait. Wears with use.",
-                CraftingStations.Forge, 2, 150f, ("FineWood", 10, 5), ("Silver", 4, 2), ("Guck", 2, 1));
+                new Color(0.8f, 0.88f, 1f), CraftingStations.Forge, 2, 150f, ("FineWood", 10, 5), ("Silver", 4, 2), ("Guck", 2, 1));
             AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it. Wears with use.",
-                CraftingStations.Forge, 3, 200f, ("FineWood", 10, 5), ("BlackMetal", 5, 3), ("LinenThread", 5, 2));
+                new Color(0.45f, 0.45f, 0.5f), CraftingStations.Forge, 3, 200f, ("FineWood", 10, 5), ("BlackMetal", 5, 3), ("LinenThread", 5, 2));
             // Base bait without Haldor: neck tails at the cauldron. Biome baits stay vanilla (bait + trophy).
             ItemManager.Instance.AddRecipe(new CustomRecipe(new RecipeConfig
             {
@@ -64,7 +64,7 @@ namespace ComfyFishing
         }
 
         /// Crafted rods wear out (one point per cast) and upgrade to quality 4 at their station.
-        private void AddRod(string name, int tier, string display, string desc, string station, int level, float durability, params (string item, int amount, int perLevel)[] cost)
+        private void AddRod(string name, int tier, string display, string desc, Color tint, string station, int level, float durability, params (string item, int amount, int perLevel)[] cost)
         {
             var reqs = new List<RequirementConfig>();
             foreach (var (item, amount, perLevel) in cost) reqs.Add(new RequirementConfig(item, amount, perLevel, true));
@@ -82,8 +82,50 @@ namespace ComfyFishing
             shared.m_durabilityPerLevel = durability * 0.5f;
             shared.m_useDurabilityDrain = 1f;
             shared.m_maxQuality = 4;
+            Tint.Apply(rod.ItemPrefab, tint);
+            if (shared.m_icons != null && shared.m_icons.Length > 0 && shared.m_icons[0])
+                shared.m_icons = new[] { Tint.Sprite(shared.m_icons[0], tint) };
             ItemManager.Instance.AddItem(rod);
             Rods.Tiers[name] = tier;
+        }
+    }
+
+    /// Recolour a cloned prefab's materials and icon so the tiers read at a glance.
+    public static class Tint
+    {
+        public static void Apply(GameObject prefab, Color c)
+        {
+            foreach (var r in prefab.GetComponentsInChildren<Renderer>(true))
+            {
+                var mats = r.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    if (!mats[i]) continue;
+                    var m = new Material(mats[i]);
+                    if (m.HasProperty("_Color")) m.color = c;
+                    mats[i] = m;
+                }
+                r.sharedMaterials = mats;
+            }
+        }
+
+        /// Copy a sprite through a RenderTexture (its texture isn't readable) and multiply by the tint.
+        public static Sprite Sprite(Sprite src, Color c)
+        {
+            var rect = src.textureRect;
+            var rt = RenderTexture.GetTemporary(src.texture.width, src.texture.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            var prev = RenderTexture.active;
+            Graphics.Blit(src.texture, rt);
+            RenderTexture.active = rt;
+            var tex = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
+            tex.ReadPixels(new Rect(rect.x, src.texture.height - rect.y - rect.height, rect.width, rect.height), 0, 0);
+            RenderTexture.active = prev;
+            RenderTexture.ReleaseTemporary(rt);
+            var px = tex.GetPixels();
+            for (int i = 0; i < px.Length; i++) px[i] = new Color(px[i].r * c.r, px[i].g * c.g, px[i].b * c.b, px[i].a);
+            tex.SetPixels(px);
+            tex.Apply();
+            return UnityEngine.Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), src.pixelsPerUnit);
         }
     }
 
