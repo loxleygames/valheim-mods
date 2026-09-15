@@ -14,7 +14,7 @@ namespace InventoryReforged
     {
         public const string PluginGUID = "games.loxley.inventoryreforged";
         public const string PluginName = "InventoryReforged";
-        public const string PluginVersion = "0.1.0";
+        public const string PluginVersion = "0.1.1";
 
         public static ConfigEntry<KeyboardShortcut> StashKey;
         public static ConfigEntry<float> StashRange;

@@ -1,6 +1,6 @@
 {
   "name": "InventoryReforged",
-  "version_number": "0.1.0",
+  "version_number": "0.1.1",
   "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/reforged",
   "description": "Quick stack to nearby chests, working on the current game. Plus craft from chests, shared chests, and armour slots.",
   "dependencies": [
