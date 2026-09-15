@@ -19,24 +19,20 @@ Crafted rods **wear one point per cast** and **upgrade to level 4** at their sta
 
 ## Bait
 
-Fishing bait is craftable at the Cauldron: 2 Neck tails + 1 Mushroom → 10 bait. The biome baits are vanilla (20 bait + a trophy at the Cauldron) and now each has its biome's colour so they don't all look the same.
+Bait is per biome, so bait is how the catch is gated. Each needs a fishing skill level and a rod before fish will take it. All bait is made at the Cauldron; the biome ones are vanilla recipes.
 
-## Tiers
+| Bait | Made from | Skill | Rod |
+|---|---|---|---|
+| Fishing bait | 2 Neck tails + 1 Mushroom → 10 (or Haldor) | 0 | Wooden (or Haldor's) |
+| Forest bait | 20 Fishing bait + Troll trophy | 10 | Wooden (or Haldor's) |
+| Cave bait | 20 Fishing bait + Fenring trophy | 20 | Bone |
+| Swamp bait | 20 Fishing bait + Abomination trophy | 25 | Bone |
+| Ocean bait | 20 Fishing bait + Serpent trophy | 30 | Bone |
+| Plains bait | 20 Fishing bait + Lox trophy | 40 | Silver |
+| Mistlands bait | 20 Fishing bait + Seeker soldier trophy | 55 | Silver |
+| Ashlands bait | 20 Fishing bait + Morgen trophy | 70 | Black metal |
 
-Bait is per biome, so bait is how the catch is gated. Each needs a fishing skill level and a rod tier before fish will take it:
-
-| Bait | Skill | Rod |
-|---|---|---|
-| Fishing bait | 0 | Wooden (or Haldor's) |
-| Forest | 10 | Wooden (or Haldor's) |
-| Cave | 20 | Bone |
-| Swamp | 25 | Bone |
-| Ocean | 30 | Bone |
-| Plains | 40 | Silver |
-| Mistlands | 55 | Silver |
-| Deep North, Ashlands | 70 | Black metal |
-
-Under-levelled? It bites, you're told it's too strong for you (or your rod isn't up to it), and it swims off. The whole table is one line in the config.
+Under-levelled? It bites, you're told it's too strong for you (or your rod isn't up to it), and it swims off. Each biome bait now carries its biome's colour so they don't all look the same. The whole tier table is one line in the config.
 
 ## Config
 
