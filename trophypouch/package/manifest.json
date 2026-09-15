@@ -1,6 +1,6 @@
 {
   "name": "TrophyPouch",
-  "version_number": "0.1.1",
+  "version_number": "0.1.2",
   "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/trophypouch",
   "description": "Trophies as a tally, not clutter. Free slots, not lost on death, crafting still sees them.",
   "dependencies": [

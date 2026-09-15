@@ -11,7 +11,7 @@ namespace TrophyPouch
     {
         public const string PluginGUID = "games.loxley.trophypouch";
         public const string PluginName = "TrophyPouch";
-        public const string PluginVersion = "0.1.1";
+        public const string PluginVersion = "0.1.2";
 
         public static ConfigEntry<bool> SweepOnLoad;
         public static ConfigEntry<float> ButtonX;
