@@ -63,6 +63,26 @@ namespace ComfyFishing
                 Requirements = new[] { new RequirementConfig("NeckTail", 2, 0, true), new RequirementConfig("Mushroom", 1, 0, true) },
             }));
 
+            // Vanilla biome baits all share one icon; give each its biome's colour.
+            var baitTints = new Dictionary<string, Color>
+            {
+                { "FishingBaitForest", new Color(0.55f, 0.85f, 0.45f) },
+                { "FishingBaitCave", new Color(0.75f, 0.6f, 0.95f) },
+                { "FishingBaitSwamp", new Color(0.55f, 0.65f, 0.35f) },
+                { "FishingBaitOcean", new Color(0.45f, 0.7f, 1f) },
+                { "FishingBaitPlains", new Color(1f, 0.85f, 0.4f) },
+                { "FishingBaitMistlands", new Color(0.6f, 0.9f, 0.9f) },
+                { "FishingBaitDeepNorth", new Color(0.8f, 0.9f, 1f) },
+                { "FishingBaitAshlands", new Color(1f, 0.5f, 0.35f) },
+            };
+            foreach (var kv in baitTints)
+            {
+                var prefab = PrefabManager.Instance.GetPrefab(kv.Key);
+                var shared = prefab ? prefab.GetComponent<ItemDrop>()?.m_itemData?.m_shared : null;
+                if (shared?.m_icons != null && shared.m_icons.Length > 0 && shared.m_icons[0])
+                    shared.m_icons = new[] { Tint.Sprite(shared.m_icons[0], kv.Value) };
+            }
+
             PrefabManager.OnVanillaPrefabsAvailable -= AddRods;
         }
 
