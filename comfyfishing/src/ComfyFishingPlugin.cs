@@ -43,12 +43,12 @@ namespace ComfyFishing
 
         private void AddRods()
         {
-            AddRod("RodBone", 2, "Bone fishing rod", "Sturdier than Haldor's. Takes swamp, cave and ocean bait.",
-                CraftingStations.Workbench, 2, ("FineWood", 10), ("BoneFragments", 4), ("Resin", 5));
-            AddRod("RodSilver", 3, "Silver fishing rod", "Light and true. Takes plains and mistlands bait.",
-                CraftingStations.Forge, 2, ("FineWood", 10), ("Silver", 4), ("Guck", 2));
-            AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it.",
-                CraftingStations.Forge, 3, ("FineWood", 10), ("BlackMetal", 5), ("LinenThread", 5));
+            AddRod("RodBone", 2, "Bone fishing rod", "Sturdier than Haldor's. Takes swamp, cave and ocean bait. Wears with use.",
+                CraftingStations.Workbench, 2, 100f, ("FineWood", 10, 5), ("BoneFragments", 4, 2), ("Resin", 5, 2));
+            AddRod("RodSilver", 3, "Silver fishing rod", "Light and true. Takes plains and mistlands bait. Wears with use.",
+                CraftingStations.Forge, 2, 150f, ("FineWood", 10, 5), ("Silver", 4, 2), ("Guck", 2, 1));
+            AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it. Wears with use.",
+                CraftingStations.Forge, 3, 200f, ("FineWood", 10, 5), ("BlackMetal", 5, 3), ("LinenThread", 5, 2));
             PrefabManager.OnVanillaPrefabsAvailable -= AddRods;
         }
 
