@@ -88,8 +88,9 @@ namespace Hourglass
             root.transform.SetParent(prefab.transform, false);
             root.layer = prefab.layer;
 
-            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.04f, 0f), new Vector3(0.52f, 0.08f, 0.52f), wood);
-            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.86f, 0f), new Vector3(0.52f, 0.08f, 0.52f), wood);
+            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.04f, 0f), new Vector3(0.54f, 0.04f, 0.54f), wood);
+            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.86f, 0f), new Vector3(0.54f, 0.04f, 0.54f), wood);
+            Part(root, PrimitiveType.Cylinder, new Vector3(0f, 0.905f, 0f), new Vector3(0.16f, 0.015f, 0.16f), wood);
             for (int i = 0; i < 3; i++)
             {
                 float a = i * Mathf.PI * 2f / 3f;
@@ -102,12 +103,20 @@ namespace Hourglass
 
         static string Describe(Material m) => m ? $"{m.name}/{m.shader.name}/tex={(m.mainTexture ? m.mainTexture.name : "none")}" : "null";
 
-        /// The first mesh material on a vanilla prefab.
+        /// A textured material from a vanilla prefab, skipping the snow-cover mesh every piece carries.
         static Material MaterialOf(string prefabName)
         {
             var prefab = PrefabManager.Instance.GetPrefab(prefabName);
-            var r = prefab ? prefab.GetComponentInChildren<MeshRenderer>(true) : null;
-            return r ? r.sharedMaterial : null;
+            if (!prefab) return null;
+            Material fallback = null;
+            foreach (var r in prefab.GetComponentsInChildren<MeshRenderer>(true))
+                foreach (var m in r.sharedMaterials)
+                {
+                    if (!m || m.shader.name.Contains("Snow") || m.name.ToLower().Contains("snow")) continue;
+                    if (m.mainTexture) return m;
+                    fallback = fallback ? fallback : m;
+                }
+            return fallback;
         }
 
         static void Part(GameObject parent, PrimitiveType type, Vector3 pos, Vector3 scale, Material mat)
