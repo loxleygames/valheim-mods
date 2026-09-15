@@ -7,6 +7,7 @@ Paths to the Steam install and BepInEx live in `Directory.Build.props`.
 | Mod | What |
 |-----|------|
 | [moorings](moorings/) | Mooring post — tie a boat to it and it can't be damaged |
+| [loxleypack](loxleypack/) | LoxleyPack — modpack of all of the above |
 | [comfyfishing](comfyfishing/) | Comfy Fishing — no tug-of-war, skill and rod tiers |
 | [gungnir](gungnir/) | Gungnir — thrown spears return to your hand |
 | [hourglass](hourglass/) | Hourglass — hold the sun at noon while you build |
