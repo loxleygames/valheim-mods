@@ -58,7 +58,7 @@ namespace Moorings
                 CraftingStation = CraftingStations.Workbench,
                 Requirements = new[]
                 {
-                    new RequirementConfig("RoundLog", 2, 0, true),
+                    new RequirementConfig("Wood", 6, 0, true),
                     new RequirementConfig("Resin", 2, 0, true),
                 }
             });
