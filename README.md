@@ -10,5 +10,6 @@ Paths to the Steam install and BepInEx live in `Directory.Build.props`.
 | [comfyfishing](comfyfishing/) | Comfy Fishing — no tug-of-war, skill and rod tiers |
 | [gungnir](gungnir/) | Gungnir — thrown spears return to your hand |
 | [hourglass](hourglass/) | Hourglass — hold the sun at noon while you build |
+| [trophypouch](trophypouch/) | Trophy Pouch — trophies tallied on the character, not the bag |
 | [unburdened](unburdened/) | Unburdened — no movement penalty from armour |
 | [reforged](reforged/) | Inventory Reforged — stash to nearby chests, shared chests, armour slots |
