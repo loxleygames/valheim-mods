@@ -81,7 +81,7 @@ namespace Moorings
             }
             if (!m_line) m_line = MakeLine();
             m_line.enabled = true;
-            m_line.SetPosition(0, transform.position + Vector3.up * 1.6f);
+            m_line.SetPosition(0, transform.position + Vector3.up * MooringsPlugin.LineHeight.Value);
             m_line.SetPosition(1, ship.transform.position + Vector3.up * 0.5f);
         }
 

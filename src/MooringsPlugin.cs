@@ -21,6 +21,7 @@ namespace Moorings
         public static ConfigEntry<float> MoorRange;
         public static ConfigEntry<float> Slack;
         public static ConfigEntry<float> Pull;
+        public static ConfigEntry<float> LineHeight;
 
         private void Awake()
         {
@@ -30,6 +31,9 @@ namespace Moorings
                 "How far (m) a moored boat can drift from the post before the line pulls it back.");
             Pull = Config.Bind("General", "Pull", 6f,
                 "Strength of the pull back toward the post once past the slack.");
+
+            LineHeight = Config.Bind("General", "LineHeight", 0.7f,
+                "How high up the post (m) the line is tied.");
 
             PrefabManager.OnVanillaPrefabsAvailable += AddMooringPost;
             new Harmony(PluginGUID).PatchAll();
