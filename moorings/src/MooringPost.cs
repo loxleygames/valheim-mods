@@ -46,7 +46,8 @@ namespace Moorings
             if (renderer) coil.material = renderer.sharedMaterial;
 
             const int turns = 4, perTurn = 32;
-            float r = MooringsPlugin.CoilRadius.Value > 0f ? MooringsPlugin.CoilRadius.Value : PostRadius() + 0.03f;
+            // The log mesh reports bounds well outside the visible wood; a third of that sits on it.
+            float r = MooringsPlugin.CoilRadius.Value > 0f ? MooringsPlugin.CoilRadius.Value : PostRadius() / 3f + 0.02f;
             float h = TieHeight();
             float pitch = 0.055f;
             coil.positionCount = turns * perTurn + 1;
