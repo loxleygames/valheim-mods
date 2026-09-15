@@ -51,12 +51,12 @@ namespace ComfyFishing
                 CraftingStations.Forge, 2, 150f, ("FineWood", 10, 5), ("Silver", 4, 2), ("Guck", 2, 1));
             AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it. Wears with use.",
                 CraftingStations.Forge, 3, 200f, ("FineWood", 10, 5), ("BlackMetal", 5, 3), ("LinenThread", 5, 2));
-            // Base bait without Haldor: neck tails at the cauldron. Biome baits stay vanilla (bait + trophy).
+            // Base bait without Haldor: neck tails, crafted by hand. Biome baits stay vanilla (bait + trophy).
             ItemManager.Instance.AddRecipe(new CustomRecipe(new RecipeConfig
             {
                 Item = "FishingBait",
                 Amount = 10,
-                CraftingStation = CraftingStations.Cauldron,
+                CraftingStation = CraftingStations.None,
                 Requirements = new[] { new RequirementConfig("NeckTail", 2, 0, true) },
             }));
 
