@@ -86,7 +86,7 @@ namespace ComfyFishing
             if (shared.m_icons != null && shared.m_icons.Length > 0 && shared.m_icons[0])
                 shared.m_icons = new[] { Tint.Sprite(shared.m_icons[0], tint) };
             ItemManager.Instance.AddItem(rod);
-            Rods.Tiers[name] = tier;
+            Rods.Tiers[shared.m_name] = tier;
         }
     }
 
@@ -131,13 +131,14 @@ namespace ComfyFishing
 
     public static class Rods
     {
-        public static readonly Dictionary<string, int> Tiers = new Dictionary<string, int> { { "FishingRod", 1 } };
+        /// Keyed by the item's shared name: clones keep the vanilla rod's drop prefab, so that can't be used.
+        public static readonly Dictionary<string, int> Tiers = new Dictionary<string, int>();
 
         public static int TierOf(Character owner)
         {
             var weapon = (owner as Humanoid)?.GetCurrentWeapon();
-            var prefab = weapon?.m_dropPrefab ? weapon.m_dropPrefab.name : null;
-            return prefab != null && Tiers.TryGetValue(prefab, out var t) ? t : 1;
+            var key = weapon?.m_shared?.m_name;
+            return key != null && Tiers.TryGetValue(key, out var t) ? t : 1;
         }
     }
 
