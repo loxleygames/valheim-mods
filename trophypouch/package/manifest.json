@@ -2,7 +2,7 @@
   "name": "TrophyPouch",
   "version_number": "0.1.0",
   "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/trophypouch",
-  "description": "Trophies go in your pouch, not your bag. Never lost, never in the way. Crafting still sees them.",
+  "description": "Trophies as a tally, not clutter. Free slots, not lost on death, crafting still sees them.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2350",
     "ValheimModding-Jotunn-2.30.0"

@@ -1,6 +1,6 @@
 # Trophy Pouch
 
-Trophies go in your pouch, not your bag. Never lost, never in the way.
+Trophies as a tally, not clutter. Free slots, not lost on death, crafting still sees them.
 
 Pick up a trophy and it's tallied in a pouch on your character instead of taking a slot. Open your inventory and press the **T** button beside the weight readout to see what you've got; **Take** puts one back in your bag when you want to hang it or offer it at an altar.
 
