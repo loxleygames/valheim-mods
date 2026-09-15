@@ -57,7 +57,7 @@ namespace ComfyFishing
                 Item = "FishingBait",
                 Amount = 10,
                 CraftingStation = CraftingStations.Cauldron,
-                Requirements = new[] { new RequirementConfig("NeckTail", 2, 0, true) },
+                Requirements = new[] { new RequirementConfig("NeckTail", 2, 0, true), new RequirementConfig("Mushroom", 1, 0, true) },
             }));
 
             PrefabManager.OnVanillaPrefabsAvailable -= AddRods;
