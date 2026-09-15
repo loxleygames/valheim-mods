@@ -67,7 +67,6 @@ namespace Moorings
                 new Keyframe(0f, 0f), new Keyframe(edgeT, 1f), new Keyframe(1f - edgeT, 1f), new Keyframe(1f, 0f));
             coil.widthMultiplier = 0.05f;
         }
-        }
 
         private void OnDestroy() => All.Remove(this);
 
