@@ -5,7 +5,7 @@ Valheim mod. Adds a **Mooring post** (Hammer → Misc, 6 Wood + 2 Resin at a Wor
 Interact with it to tie the nearest boat (within 12m). While moored the boat:
 
 - takes no damage from anything — wave slams, rocks, docks, rain, Ashlands
-- still rides the waves, but gets pulled back if it drifts more than 3m from the post
+- still rides the waves, but gets pulled back if its nearest end drifts more than 3m from the post (the line is sized to the hull, so a longship gets more room than a raft)
 
 Interact again to cast off, or just take the rudder and push forward.
 
