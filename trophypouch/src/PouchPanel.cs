@@ -59,6 +59,10 @@ namespace TrophyPouch
             GUIManager.Instance.CreateText("Trophies", s_panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -22f),
                 GUIManager.Instance.AveriaSerifBold, 20, GUIManager.Instance.ValheimOrange, true, Color.black, 260f, 30f, false);
             var scroll = GUIManager.Instance.CreateScrollView(s_panel.transform, false, true, 8f, 4f, GUIManager.Instance.ValheimScrollbarHandleColorBlock, new Color(0f, 0f, 0f, 0.3f), 270f, height - 60f);
+            // Jötunn nests a Canvas in its scroll view; tooltips spawn under the nearest Canvas and get masked. Drop it.
+            foreach (var c in scroll.GetComponents<GraphicRaycaster>()) Object.Destroy(c);
+            foreach (var c in scroll.GetComponents<CanvasScaler>()) Object.Destroy(c);
+            foreach (var c in scroll.GetComponents<Canvas>()) Object.Destroy(c);
             var srt = scroll.GetComponent<RectTransform>();
             srt.anchorMin = srt.anchorMax = new Vector2(0.5f, 1f);
             srt.pivot = new Vector2(0.5f, 1f);
