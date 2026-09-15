@@ -44,7 +44,7 @@ namespace ComfyFishing
         private void AddRods()
         {
             AddRod("RodBone", 2, "Bone fishing rod", "Sturdier than Haldor's. Takes swamp, cave and ocean bait.",
-                CraftingStations.Workbench, 2, ("FineWood", 10), ("BoneFragments", 10), ("Resin", 5));
+                CraftingStations.Workbench, 2, ("FineWood", 10), ("BoneFragments", 4), ("Resin", 5));
             AddRod("RodSilver", 3, "Silver fishing rod", "Light and true. Takes plains and mistlands bait.",
                 CraftingStations.Forge, 2, ("FineWood", 10), ("Silver", 4), ("Guck", 2));
             AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it.",

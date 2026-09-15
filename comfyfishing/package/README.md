@@ -27,7 +27,7 @@ Three new rods above Haldor's, all craftable:
 
 | Rod | Where | Cost |
 |---|---|---|
-| Bone fishing rod | Workbench 2 | 10 Fine wood, 10 Bone fragments, 5 Resin |
+| Bone fishing rod | Workbench 2 | 10 Fine wood, 4 Bone fragments, 5 Resin |
 | Silver fishing rod | Forge 2 | 10 Fine wood, 4 Silver, 2 Guck |
 | Black metal fishing rod | Forge 3 | 10 Fine wood, 5 Black metal, 5 Linen thread |
 
