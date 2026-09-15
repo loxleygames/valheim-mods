@@ -82,6 +82,7 @@ namespace Hourglass
             var wood = MaterialOf("wood_pole2") ?? MaterialOf("guard_stone");
             var glass = MaterialOf("crystal_wall_1x1") ?? wood;
             var sand = MaterialOf("piece_beehive") ?? wood;
+            Debug.Log($"[Hourglass] wood={Describe(wood)} glass={Describe(glass)} sand={Describe(sand)} rootScale={prefab.transform.localScale} rootRot={prefab.transform.localRotation.eulerAngles}");
 
             var root = new GameObject("hourglass");
             root.transform.SetParent(prefab.transform, false);
@@ -98,6 +99,8 @@ namespace Hourglass
             Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.27f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
             Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.63f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
         }
+
+        static string Describe(Material m) => m ? $"{m.name}/{m.shader.name}/tex={(m.mainTexture ? m.mainTexture.name : "none")}" : "null";
 
         /// The first mesh material on a vanilla prefab.
         static Material MaterialOf(string prefabName)
