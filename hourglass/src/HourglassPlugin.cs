@@ -70,52 +70,36 @@ namespace Hourglass
     {
         public static void Build(GameObject prefab)
         {
-            var wardRenderer = prefab.GetComponentInChildren<MeshRenderer>(true);
-            var stone = wardRenderer ? wardRenderer.sharedMaterial : null;
-            foreach (var r in prefab.GetComponentsInChildren<MeshRenderer>(true)) r.enabled = false;
+            foreach (var r in prefab.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+            foreach (var l in prefab.GetComponentsInChildren<Light>(true)) Object.DestroyImmediate(l);
+            foreach (var ps in prefab.GetComponentsInChildren<ParticleSystem>(true)) Object.DestroyImmediate(ps.gameObject);
 
-            // The Ward's yellow glow, turned cold blue.
-            var blue = new Color(0.35f, 0.6f, 1f);
-            foreach (var light in prefab.GetComponentsInChildren<Light>(true)) light.color = blue;
-            foreach (var ps in prefab.GetComponentsInChildren<ParticleSystem>(true))
-            {
-                var main = ps.main;
-                main.startColor = blue;
-            }
-            foreach (var r in prefab.GetComponentsInChildren<Renderer>(true))
-            {
-                if (r is MeshRenderer || !r.sharedMaterial) continue;
-                var m = new Material(r.sharedMaterial);
-                if (m.HasProperty("_Color")) m.color = blue;
-                if (m.HasProperty("_TintColor")) m.SetColor("_TintColor", blue);
-                r.sharedMaterial = m;
-            }
+            var wood = MaterialOf("wood_pole2") ?? MaterialOf("guard_stone");
+            var glass = MaterialOf("crystal_wall_1x1") ?? wood;
+            var sand = MaterialOf("piece_beehive") ?? wood;
 
             var root = new GameObject("hourglass");
             root.transform.SetParent(prefab.transform, false);
             root.layer = prefab.layer;
 
-            var glass = Tint(stone, new Color(1f, 0.85f, 0.55f));
-            var sand = Tint(stone, new Color(0.9f, 0.65f, 0.25f));
-
-            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.04f, 0f), new Vector3(0.52f, 0.08f, 0.52f), stone);
-            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.86f, 0f), new Vector3(0.52f, 0.08f, 0.52f), stone);
+            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.04f, 0f), new Vector3(0.52f, 0.08f, 0.52f), wood);
+            Part(root, PrimitiveType.Cube, new Vector3(0f, 0.86f, 0f), new Vector3(0.52f, 0.08f, 0.52f), wood);
             for (int i = 0; i < 3; i++)
             {
                 float a = i * Mathf.PI * 2f / 3f;
-                Part(root, PrimitiveType.Cylinder, new Vector3(Mathf.Cos(a) * 0.21f, 0.45f, Mathf.Sin(a) * 0.21f), new Vector3(0.05f, 0.37f, 0.05f), stone);
+                Part(root, PrimitiveType.Cylinder, new Vector3(Mathf.Cos(a) * 0.21f, 0.45f, Mathf.Sin(a) * 0.21f), new Vector3(0.05f, 0.37f, 0.05f), wood);
             }
+            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.18f, 0f), new Vector3(0.24f, 0.16f, 0.24f), sand);
             Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.27f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
             Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.63f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
-            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.18f, 0f), new Vector3(0.24f, 0.16f, 0.24f), sand);
         }
 
-        static Material Tint(Material from, Color c)
+        /// The first mesh material on a vanilla prefab.
+        static Material MaterialOf(string prefabName)
         {
-            if (!from) return null;
-            var m = new Material(from);
-            m.color = c;
-            return m;
+            var prefab = PrefabManager.Instance.GetPrefab(prefabName);
+            var r = prefab ? prefab.GetComponentInChildren<MeshRenderer>(true) : null;
+            return r ? r.sharedMaterial : null;
         }
 
         static void Part(GameObject parent, PrimitiveType type, Vector3 pos, Vector3 scale, Material mat)
