@@ -92,6 +92,16 @@ namespace TrophyPouch
             return take;
         }
 
+        public static int RemoveByPrefab(string prefab, int amount)
+        {
+            EnsureLoaded();
+            if (!s_counts.TryGetValue(prefab, out var n)) return 0;
+            int take = Mathf.Min(n, amount);
+            if (n - take <= 0) s_counts.Remove(prefab); else s_counts[prefab] = n - take;
+            Save();
+            return take;
+        }
+
         /// One trophy out of the pouch and into the bag.
         public static bool Take(string prefab)
         {

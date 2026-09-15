@@ -6,6 +6,7 @@ namespace TrophyPouch
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
+    [BepInDependency("games.loxley.inventoryreforged", BepInDependency.DependencyFlags.SoftDependency)]
     public class TrophyPouchPlugin : BaseUnityPlugin
     {
         public const string PluginGUID = "games.loxley.trophypouch";
@@ -23,7 +24,9 @@ namespace TrophyPouch
             ButtonX = Config.Bind("General", "ButtonX", 33f, "Pouch button centre, relative to the bottom-right corner of the inventory panel.");
             ButtonY = Config.Bind("General", "ButtonY", 126f, "Pouch button centre, relative to the bottom-right corner of the inventory panel.");
             PanelHeight = Config.Bind("General", "PanelHeight", 580f, "Height (px) of the pouch panel. It scrolls past that.");
-            new Harmony(PluginGUID).PatchAll();
+            var harmony = new Harmony(PluginGUID);
+            harmony.PatchAll();
+            StashHook.TryHookReforged(harmony);
         }
     }
 }

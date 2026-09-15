@@ -4,7 +4,7 @@ Trophies as a tally, not clutter. Free slots, not lost on death, crafting still 
 
 Pick up a trophy and it's tallied in a pouch on your character instead of taking a slot. Open your inventory and press the **T** button beside the weight readout: your trophies appear as inventory slots with counts, hover for the lore, click one to take it back into your bag when you want to hang it or offer it at an altar.
 
-Crafting and building count the pouch as if it were in your inventory, so bait, banners and anything else that wants a trophy just works.
+Crafting and building count the pouch as if it were in your inventory, so bait, banners and anything else that wants a trophy just works. Quick-stacking into a chest ("Place stacks", or Inventory Reforged's Stash) also pours matching trophies out of the pouch into it, so the trophy chest at a shared base keeps filling up.
 
 The pouch is saved with your character, not your inventory — so it survives death. A boss trophy shouldn't be at the bottom of a swamp in a tombstone.
 
