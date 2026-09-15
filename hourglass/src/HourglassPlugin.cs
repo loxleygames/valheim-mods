@@ -99,9 +99,9 @@ namespace Hourglass
             // One vessel: a pinched profile revolved round the axis.
             Lathe(root, "glass", glass, new[]
             {
-                (0.08f, 0.10f), (0.12f, 0.15f), (0.20f, 0.175f), (0.30f, 0.14f), (0.38f, 0.06f),
+                (0.06f, 0.10f), (0.12f, 0.15f), (0.20f, 0.175f), (0.30f, 0.14f), (0.38f, 0.06f),
                 (0.42f, 0.03f),
-                (0.46f, 0.06f), (0.54f, 0.14f), (0.64f, 0.175f), (0.72f, 0.15f), (0.76f, 0.10f),
+                (0.46f, 0.06f), (0.54f, 0.14f), (0.64f, 0.175f), (0.72f, 0.15f), (0.78f, 0.10f),
             });
         }
 
