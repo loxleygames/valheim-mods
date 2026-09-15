@@ -20,7 +20,7 @@ namespace TrophyPouch
         {
             SweepOnLoad = Config.Bind("General", "SweepOnLoad", true, "Move trophies already in your bag into the pouch when you spawn.");
             ButtonX = Config.Bind("General", "ButtonX", 33f, "Pouch button centre, relative to the bottom-right corner of the inventory panel.");
-            ButtonY = Config.Bind("General", "ButtonY", 110f, "Pouch button centre, relative to the bottom-right corner of the inventory panel.");
+            ButtonY = Config.Bind("General", "ButtonY", 118f, "Pouch button centre, relative to the bottom-right corner of the inventory panel.");
             new Harmony(PluginGUID).PatchAll();
         }
     }

@@ -51,6 +51,10 @@ namespace TrophyPouch
             var gui = InventoryGui.instance;
             s_panel = GUIManager.Instance.CreateWoodpanel(gui.m_player, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(240f, 0f), 300f, gui.m_player.rect.height, false);
             s_panel.name = "TrophyPouchPanel";
+            // Hang it off the inventory's top-right corner so its top is level with the inventory.
+            var prt = s_panel.GetComponent<RectTransform>();
+            prt.pivot = new Vector2(0f, 1f);
+            prt.anchoredPosition = new Vector2(90f, 0f);
             GUIManager.Instance.CreateText("Trophies", s_panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -22f),
                 GUIManager.Instance.AveriaSerifBold, 20, GUIManager.Instance.ValheimOrange, true, Color.black, 260f, 30f, false);
             var scroll = GUIManager.Instance.CreateScrollView(s_panel.transform, false, true, 8f, 4f, GUIManager.Instance.ValheimScrollbarHandleColorBlock, new Color(0f, 0f, 0f, 0.3f), 270f, gui.m_player.rect.height - 60f);
