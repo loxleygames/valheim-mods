@@ -44,9 +44,14 @@ namespace Hourglass
             prefab.AddComponent<HourglassPiece>();
             HourglassModel.Build(prefab);
 
+            // Build-menu icon: hourglass_icon.png beside the DLL, else keep the Ward's.
+            var iconPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Info.Location), "hourglass_icon.png");
+            var icon = System.IO.File.Exists(iconPath) ? Jotunn.Utils.AssetUtils.LoadSpriteFromFile(iconPath) : null;
+
             PieceManager.Instance.AddPiece(new CustomPiece(prefab, fixReference: true, new PieceConfig
             {
                 Name = "Hourglass",
+                Icon = icon,
                 Description = "Holds the sun at noon for everyone until used again. Good for building.",
                 PieceTable = PieceTables.Hammer,
                 Category = PieceCategories.Misc,

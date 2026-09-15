@@ -8,4 +8,5 @@ mkdir -p dist
 rm -f dist/Hourglass-$VER.zip
 cd package && zip -q ../dist/Hourglass-$VER.zip manifest.json README.md CHANGELOG.md icon.png && cd ..
 zip -qj dist/Hourglass-$VER.zip bin/Release/Hourglass.dll
+[ -f package/hourglass_icon.png ] && zip -qj dist/Hourglass-$VER.zip package/hourglass_icon.png
 echo "dist/Hourglass-$VER.zip"
