@@ -1,0 +1,10 @@
+{
+  "name": "ComfyFishing",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/comfyfishing",
+  "description": "Fishing without the tug-of-war: a bite, a click, and it reels itself in. Skill and rod tiers gate the catch.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350",
+    "ValheimModding-Jotunn-2.30.0"
+  ]
+}

@@ -7,5 +7,6 @@ Paths to the Steam install and BepInEx live in `Directory.Build.props`.
 | Mod | What |
 |-----|------|
 | [moorings](moorings/) | Mooring post — tie a boat to it and it can't be damaged |
+| [comfyfishing](comfyfishing/) | Comfy Fishing — no tug-of-war, skill and rod tiers |
 | [hourglass](hourglass/) | Hourglass — hold the sun at noon while you build |
 | [reforged](reforged/) | Inventory Reforged — stash to nearby chests, shared chests, armour slots |

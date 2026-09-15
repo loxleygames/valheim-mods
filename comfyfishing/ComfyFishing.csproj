@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>ComfyFishing</AssemblyName>
+    <RootNamespace>ComfyFishing</RootNamespace>
+  </PropertyGroup>
+</Project>
