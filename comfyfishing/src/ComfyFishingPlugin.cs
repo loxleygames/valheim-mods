@@ -32,8 +32,8 @@ namespace ComfyFishing
             VanillaRodVanillaReel = Config.Bind("Reel", "VanillaRodVanillaReel", true, "Haldor's fishing rod keeps the vanilla tug-of-war; only crafted rods get the comfy reel.");
             AutoHook = Config.Bind("Reel", "AutoHook", false, "Hook the fish the moment it bites, no click needed.");
             HookWindow = Config.Bind("Reel", "HookWindow", 1.5f, "Seconds after a bite in which a click hooks the fish (vanilla: 0.5).");
-            ReelSpeed = Config.Bind("Reel", "ReelSpeed", 1.5f, "Metres of line per second once hooked, at fishing skill 0.");
-            ReelSpeedMaxSkill = Config.Bind("Reel", "ReelSpeedMaxSkill", 3f, "Metres of line per second once hooked, at fishing skill 100.");
+            ReelSpeed = Config.Bind("Reel", "ReelSpeed", 3f, "Metres of line per second once hooked, at fishing skill 0.");
+            ReelSpeedMaxSkill = Config.Bind("Reel", "ReelSpeedMaxSkill", 6f, "Metres of line per second once hooked, at fishing skill 100.");
             GateBySkill = Config.Bind("Tiers", "Enabled", true, "Baits need a fishing skill level and rod tier before fish will take them.");
             BaitTiers = Config.Bind("Tiers", "BaitTiers",
                 "FishingBait:0:1, FishingBaitForest:10:1, FishingBaitCave:20:2, FishingBaitSwamp:25:2, FishingBaitOcean:30:2, FishingBaitPlains:40:3, FishingBaitMistlands:55:3, FishingBaitDeepNorth:70:4, FishingBaitAshlands:70:4",
