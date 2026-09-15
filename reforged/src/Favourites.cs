@@ -19,7 +19,7 @@ namespace InventoryReforged
             else item.m_customData[Key] = "1";
         }
 
-        static bool AltHeld() => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+        static bool AltHeld() => ZInput.GetKey(KeyCode.LeftAlt) || ZInput.GetKey(KeyCode.RightAlt);
 
         [HarmonyPatch(typeof(InventoryGui), "OnSelectedItem")]
         static class ToggleOnAltClick
@@ -69,7 +69,7 @@ namespace InventoryReforged
                 var go = Object.Instantiate(binding.gameObject, el.transform);
                 go.name = "IR_star";
                 var text = go.GetComponent<TMP_Text>();
-                text.text = "★";
+                text.text = text.font && text.font.HasCharacter('★') ? "★" : "*";
                 text.color = new Color(1f, 0.85f, 0.2f);
                 text.alignment = TextAlignmentOptions.TopRight;
                 var rt = go.GetComponent<RectTransform>();
