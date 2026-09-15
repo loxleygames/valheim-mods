@@ -62,9 +62,9 @@ namespace TrophyPouch
                 GUIManager.Instance.AveriaSerifBold, 20, GUIManager.Instance.ValheimOrange, true, Color.black, 260f, 30f, false);
             var scroll = GUIManager.Instance.CreateScrollView(s_panel.transform, false, true, 8f, 4f, GUIManager.Instance.ValheimScrollbarHandleColorBlock, new Color(0f, 0f, 0f, 0.3f), 270f, height - 60f);
             // Jötunn nests a Canvas in its scroll view; tooltips spawn under the nearest Canvas and get masked. Drop it.
-            foreach (var c in scroll.GetComponents<GraphicRaycaster>()) Object.Destroy(c);
-            foreach (var c in scroll.GetComponents<CanvasScaler>()) Object.Destroy(c);
-            foreach (var c in scroll.GetComponents<Canvas>()) Object.Destroy(c);
+            foreach (var c in scroll.GetComponentsInChildren<GraphicRaycaster>(true)) Object.DestroyImmediate(c);
+            foreach (var c in scroll.GetComponentsInChildren<CanvasScaler>(true)) Object.DestroyImmediate(c);
+            foreach (var c in scroll.GetComponentsInChildren<Canvas>(true)) Object.DestroyImmediate(c);
             var srt = scroll.GetComponent<RectTransform>();
             srt.anchorMin = srt.anchorMax = new Vector2(0.5f, 1f);
             srt.pivot = new Vector2(0.5f, 1f);
@@ -162,26 +162,8 @@ namespace TrophyPouch
                 bool visible = InventoryGui.IsVisible();
                 if (!visible && s_open) { s_open = false; s_panel.SetActive(false); }
                 if (s_open && Pouch.Dirty) Refresh();
-                DebugTooltip();
             }
 
-            static GameObject s_lastTip;
-            static void DebugTooltip()
-            {
-                var tip = AccessTools.Field(typeof(UITooltip), "m_tooltip")?.GetValue(null) as GameObject;
-                if (!tip || tip == s_lastTip || !tip.activeInHierarchy) return;
-                s_lastTip = tip;
-                var sb = new System.Text.StringBuilder("[TrophyPouch tooltip] ");
-                for (var t = tip.transform; t; t = t.parent)
-                {
-                    sb.Append(t.name);
-                    foreach (var c in t.GetComponents<Component>()) if (c is Canvas || c is RectMask2D || c is Mask) sb.Append('[').Append(c.GetType().Name).Append(']');
-                    sb.Append(" < ");
-                }
-                var rt = tip.transform.GetChild(0) as RectTransform;
-                if (rt) sb.Append($" | pos={rt.position} size={rt.rect.size}");
-                Debug.Log(sb.ToString());
-            }
         }
     }
 }
