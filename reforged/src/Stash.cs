@@ -150,10 +150,10 @@ namespace InventoryReforged
             var legacy = button.GetComponentInChildren<Text>();
             if (legacy) legacy.text = "»";
 
-            // A small square in the header band, next to the panel title, clear of the grid.
+            // A small square just under the Weight box, hung off the panel's bottom-right corner like the vanilla boxes are.
             var rt = button.GetComponent<RectTransform>();
-            rt.anchorMin = rt.anchorMax = new Vector2(1f, 1f);
-            rt.pivot = new Vector2(1f, 1f);
+            rt.anchorMin = rt.anchorMax = new Vector2(1f, 0f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
             rt.sizeDelta = new Vector2(Plugin.StashButtonSize.Value, Plugin.StashButtonSize.Value);
             rt.anchoredPosition = new Vector2(Plugin.StashButtonX.Value, Plugin.StashButtonY.Value);
             var tip = button.GetComponent<UITooltip>();

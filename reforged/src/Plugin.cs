@@ -26,7 +26,7 @@ namespace InventoryReforged
         public static ConfigEntry<float> StashButtonSize;
         public static ConfigEntry<bool> SharedChests;
         public static ConfigEntry<bool> ArmourSlots;
-        public static ConfigEntry<float> ArmourRowOffset;
+        public static ConfigEntry<bool> DebugLayout;
 
         private void Awake()
         {
@@ -35,12 +35,13 @@ namespace InventoryReforged
             StashKeepHotbar = Config.Bind("Stash", "KeepHotbar", true, "Leave items on the hotbar alone.");
             StashPlayerBuiltOnly = Config.Bind("Stash", "PlayerBuiltOnly", true, "Ignore chests you didn't build (dungeon chests, etc).");
             StashButton = Config.Bind("Stash", "ShowButton", true, "Add a Stash button to the inventory screen.");
-            StashButtonX = Config.Bind("Stash", "ButtonX", -10f, "Button offset from the top-right of the inventory panel.");
-            StashButtonY = Config.Bind("Stash", "ButtonY", -6f, "Button offset from the top-right of the inventory panel.");
-            StashButtonSize = Config.Bind("Stash", "ButtonSize", 30f, "Button width and height (px).");
+            StashButtonX = Config.Bind("Stash", "ButtonX", 33f, "Button centre, relative to the bottom-right corner of the inventory panel.");
+            StashButtonY = Config.Bind("Stash", "ButtonY", 4f, "Button centre, relative to the bottom-right corner of the inventory panel.");
+            StashButtonSize = Config.Bind("Stash", "ButtonSize", 38f, "Button width and height (px).");
             SharedChests = Config.Bind("SharedChests", "Enabled", true, "Let more than one player use a chest at the same time. Everyone needs the mod.");
             ArmourSlots = Config.Bind("ArmourSlots", "Enabled", true, "Extra row with head / chest / legs / cape slots.");
-            ArmourRowOffset = Config.Bind("ArmourSlots", "PanelGrow", 74f, "How much taller (px) to make the inventory panel for the armour row.");
+
+            DebugLayout = Config.Bind("Debug", "DumpLayout", false, "Log the inventory panel hierarchy once when the inventory opens.");
 
             new Harmony(PluginGUID).PatchAll();
         }

@@ -11,8 +11,9 @@ namespace InventoryReforged
     /// The rest of the row is hidden and never used for auto-placement.
     public static class ArmourSlots
     {
-        public const int Row = 4;
-        public const int Rows = 5;
+        /// The armour row is always the last one: one past however many rows the player owns.
+        static bool s_sized;
+        static int RowOf(Inventory inv) => inv.GetHeight() - 1;
         static readonly ItemDrop.ItemData.ItemType[] Slots =
         {
             ItemDrop.ItemData.ItemType.Helmet,
@@ -26,7 +27,7 @@ namespace InventoryReforged
         static readonly AccessTools.FieldRef<InventoryGrid, List<InventoryElement>> Elements = AccessTools.FieldRefAccess<InventoryGrid, List<InventoryElement>>("m_elements");
 
         static bool On => Plugin.ArmourSlots.Value;
-        static bool IsLocal(Inventory inv) => On && Player.m_localPlayer && Player.m_localPlayer.GetInventory() == inv;
+        static bool IsLocal(Inventory inv) => On && s_sized && Player.m_localPlayer && Player.m_localPlayer.GetInventory() == inv;
 
         public static int SlotFor(ItemDrop.ItemData item)
         {
@@ -34,7 +35,7 @@ namespace InventoryReforged
             return -1;
         }
 
-        static bool InSlot(ItemDrop.ItemData item) => item.m_gridPos.y == Row;
+        static bool InSlot(Inventory inv, ItemDrop.ItemData item) => item.m_gridPos.y == RowOf(inv);
 
         /// Move an item to a grid position, going through Remove/Add so listeners fire.
         static void Relocate(Inventory inv, ItemDrop.ItemData item, Vector2i pos)
@@ -47,12 +48,13 @@ namespace InventoryReforged
         static void Reconcile(Player player)
         {
             var inv = player.GetInventory();
+            int row = RowOf(inv);
             foreach (var item in new List<ItemDrop.ItemData>(inv.GetAllItems()))
             {
                 int slot = SlotFor(item);
                 if (item.m_equipped && slot >= 0)
                 {
-                    var want = new Vector2i(slot, Row);
+                    var want = new Vector2i(slot, row);
                     if (item.m_gridPos == want) continue;
                     var occupant = inv.GetItemAt(want.x, want.y);
                     if (occupant != null)
@@ -64,7 +66,7 @@ namespace InventoryReforged
                     }
                     Relocate(inv, item, want);
                 }
-                else if (InSlot(item) && !item.m_equipped)
+                else if (InSlot(inv, item) && !item.m_equipped)
                 {
                     var old = item.m_gridPos;
                     inv.RemoveItem(item);
@@ -73,13 +75,28 @@ namespace InventoryReforged
             }
         }
 
-        [HarmonyPatch(typeof(Player), "Awake")]
-        static class GrowInventory
+        /// Vanilla sets the row count on spawn and when Haldor sells a row, then drops anything outside the grid.
+        /// Same routine, one row taller, so the armour row is never "outside".
+        [HarmonyPatch(typeof(Player), nameof(Player.SetInventorySize))]
+        static class OneRowTaller
         {
-            static void Postfix(Player __instance)
+            static bool Prefix(Player __instance, int rows)
             {
-                if (On) __instance.GetInventory().SetHeight(Rows);
+                if (!On) return true;
+                rows = Mathf.Clamp(rows, 0, 9);
+                __instance.GetInventory().SetHeight(rows + 1);
+                __instance.AddUniqueKeyValue(Player.InventoryRowsKey, rows.ToString());
+                InventoryGui.instance.SetInventorySize(rows + 1);
+                if (__instance == Player.m_localPlayer) s_sized = true;
+                __instance.DropInvalidItems();
+                return false;
             }
+        }
+
+        [HarmonyPatch(typeof(Player), "Awake")]
+        static class ResetOnNewPlayer
+        {
+            static void Postfix() => s_sized = false;
         }
 
         [HarmonyPatch(typeof(Player), "Update")]
@@ -100,7 +117,7 @@ namespace InventoryReforged
                 __state = -1;
                 if (!IsLocal(__instance)) return;
                 __state = Height(__instance);
-                Height(__instance) = Row;
+                Height(__instance) = __state - 1;
             }
             public static void Postfix(Inventory __instance, int __state)
             {
@@ -123,41 +140,31 @@ namespace InventoryReforged
         {
             static bool Prefix(InventoryGrid __instance, ItemDrop.ItemData item, Vector2i pos, ref bool __result)
             {
-                if (!IsLocal(__instance.GetInventory()) || pos.y != Row) return true;
+                if (!IsLocal(__instance.GetInventory()) || pos.y != RowOf(__instance.GetInventory())) return true;
                 if (pos.x >= Slots.Length || SlotFor(item) != pos.x) { __result = false; return false; }
                 return true;
             }
 
             static void Postfix(InventoryGrid __instance, Vector2i pos, bool __result)
             {
-                if (!__result || !IsLocal(__instance.GetInventory()) || pos.y != Row) return;
+                if (!__result || !IsLocal(__instance.GetInventory()) || pos.y != RowOf(__instance.GetInventory())) return;
                 var landed = __instance.GetInventory().GetItemAt(pos.x, pos.y);
                 if (landed != null && !landed.m_equipped) Player.m_localPlayer.EquipItem(landed);
             }
         }
 
-        /// Make room for the row on the panel, and label the slots / hide the unused ones once the grid builds them.
-        [HarmonyPatch(typeof(InventoryGui), "Awake")]
-        static class GrowPanel
-        {
-            static void Postfix(InventoryGui __instance)
-            {
-                if (!On) return;
-                float grow = Plugin.ArmourRowOffset.Value;
-                __instance.m_player.sizeDelta += new Vector2(0f, grow);
-                __instance.m_container.anchoredPosition += new Vector2(0f, -grow);
-            }
-        }
-
+        /// Label the slots and hide the unused cells once the grid builds the row.
         [HarmonyPatch(typeof(InventoryGrid), "UpdateGui")]
         static class DressRow
         {
             static void Postfix(InventoryGrid __instance)
             {
-                if (!IsLocal(__instance.GetInventory())) return;
+                var inv = __instance.GetInventory();
+                if (!IsLocal(inv)) return;
+                int row = RowOf(inv);
                 foreach (var el in Elements(__instance))
                 {
-                    if (!el || el.Position.y != Row) continue;
+                    if (!el || el.Position.y != row) continue;
                     if (el.Position.x >= Slots.Length)
                     {
                         if (el.gameObject.activeSelf) el.gameObject.SetActive(false);
