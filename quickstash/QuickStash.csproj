@@ -1,6 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <AssemblyName>QuickStash</AssemblyName>
-    <RootNamespace>QuickStash</RootNamespace>
-  </PropertyGroup>
-</Project>

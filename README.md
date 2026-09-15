@@ -7,4 +7,4 @@ Paths to the Steam install and BepInEx live in `Directory.Build.props`.
 | Mod | What |
 |-----|------|
 | [moorings](moorings/) | Mooring post — tie a boat to it and it can't be damaged |
-| [quickstash](quickstash/) | One key stashes your inventory into nearby chests, multiplayer-safe |
+| [reforged](reforged/) | Inventory Reforged — stash to nearby chests, shared chests, armour slots |
