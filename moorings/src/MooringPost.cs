@@ -27,7 +27,7 @@ namespace Moorings
             return new Bounds(transform.position + Vector3.up, new Vector3(0.5f, 2f, 0.5f));
         }
 
-        private float PostRadius() { var b = WorldBounds(); return Mathf.Min(b.extents.x, b.extents.z); }
+        private float PostRadius() { var b = WorldBounds(); return Mathf.Max(b.extents.x, b.extents.z); }
 
         public float TieHeight() =>
             MooringsPlugin.LineHeight.Value >= 0f ? MooringsPlugin.LineHeight.Value : WorldBounds().max.y - transform.position.y - 0.4f;
