@@ -45,12 +45,15 @@ namespace ComfyFishing
 
         private void AddRods()
         {
-            AddRod("RodBone", 2, "Bone fishing rod", "Sturdier than Haldor's. Takes swamp, cave and ocean bait. Wears with use.",
+            AddRod("RodWood", 1, "Wooden fishing rod", "A bent branch and a length of line. Reels itself in once something bites, but only meadows and forest fish will take the bait. Wears quickly.",
+                new Color(0.75f, 0.6f, 0.4f), CraftingStations.Workbench, 1, 60f, ("Wood", 10, 5), ("Resin", 4, 2), ("LeatherScraps", 2, 1));
+            AddRod("RodBone", 2, "Bone fishing rod", "Fine wood spliced with bone. Reels itself in, and swamp, cave and ocean fish will take the bait.",
                 new Color(0.95f, 0.9f, 0.78f), CraftingStations.Workbench, 2, 100f, ("FineWood", 10, 5), ("BoneFragments", 4, 2), ("Resin", 5, 2));
-            AddRod("RodSilver", 3, "Silver fishing rod", "Light and true. Takes plains and mistlands bait. Wears with use.",
+            AddRod("RodSilver", 3, "Silver fishing rod", "Light and true. Plains and mistlands fish will take the bait. Reels faster than bone.",
                 new Color(0.8f, 0.88f, 1f), CraftingStations.Forge, 2, 150f, ("FineWood", 10, 5), ("Silver", 4, 2), ("Guck", 2, 1));
-            AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it. Wears with use.",
+            AddRod("RodBlackMetal", 4, "Black metal fishing rod", "Nothing in the sea is too strong for it. Every bait, fastest reel.",
                 new Color(0.45f, 0.45f, 0.5f), CraftingStations.Forge, 3, 200f, ("FineWood", 10, 5), ("BlackMetal", 5, 3), ("LinenThread", 5, 2));
+
             // Base bait without Haldor: neck tails at the cauldron. Biome baits stay vanilla (bait + trophy).
             ItemManager.Instance.AddRecipe(new CustomRecipe(new RecipeConfig
             {

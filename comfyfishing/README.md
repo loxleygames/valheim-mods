@@ -2,7 +2,7 @@
 
 Fishing without the tug-of-war.
 
-Haldor's rod is what it always was: the stamina tug-of-war. Craft a better rod and fishing changes. Cast, wait, and when something bites you get a proper moment to click (1.5s, not half a second). Then the fish reels itself in — no stamina, no escaping, no snapped line. Bigger fish take longer; higher fishing skill and a better rod bring them in faster. Skill still levels while you reel.
+Haldor's rod is what it always was: the stamina tug-of-war. Craft your own rod and fishing changes. Cast, wait, and when something bites you get a proper moment to click (1.5s, not half a second). Then the fish reels itself in — no stamina, no escaping, no snapped line. Bigger fish take longer; higher fishing skill and a better rod bring them in faster. Skill still levels while you reel.
 
 ## Bait
 
@@ -14,8 +14,8 @@ Bait is per biome, so bait is how the catch is gated. Each bait needs a fishing 
 
 | Bait | Skill | Rod |
 |---|---|---|
-| Fishing bait | 0 | Fishing rod |
-| Forest | 10 | Fishing rod |
+| Fishing bait | 0 | Wooden rod (or Haldor's) |
+| Forest | 10 | Wooden rod (or Haldor's) |
 | Cave | 20 | Bone rod |
 | Swamp | 25 | Bone rod |
 | Ocean | 30 | Bone rod |
@@ -27,15 +27,16 @@ Under-levelled? It bites, you're told it's too strong for you, and it swims off.
 
 ## Rods
 
-Three new rods above Haldor's, all craftable:
+Four craftable rods, so you never need to find Haldor:
 
 | Rod | Where | Cost | Durability |
 |---|---|---|---|
+| Wooden fishing rod | Workbench 1 | 10 Wood, 4 Resin, 2 Leather scraps | 60 |
 | Bone fishing rod | Workbench 2 | 10 Fine wood, 4 Bone fragments, 5 Resin | 100 |
 | Silver fishing rod | Forge 2 | 10 Fine wood, 4 Silver, 2 Guck | 150 |
 | Black metal fishing rod | Forge 3 | 10 Fine wood, 5 Black metal, 5 Linen thread | 200 |
 
-Each tier reels 20% faster. Crafted rods **wear one point per cast** and can be **upgraded to level 4** at their station: each level adds durability and another 10% reel speed. Haldor's rod never wears, but it never gets comfy either.
+Each tier reels 20% faster than the last. Crafted rods **wear one point per cast** and can be **upgraded to level 4** at their station: each level adds durability and another 10% reel speed. Haldor's rod never wears, but it never gets comfy either.
 
 ## Config
 
