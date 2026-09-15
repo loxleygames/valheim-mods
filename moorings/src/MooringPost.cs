@@ -19,18 +19,18 @@ namespace Moorings
             MakeCoil();
         }
 
-        /// Measured from the post's mesh so the coil sits on the wood whatever pole the prefab is.
-        private Bounds LocalBounds()
+        /// World-space bounds of the post's mesh: correct whichever axis the mesh was modelled along.
+        private Bounds WorldBounds()
         {
-            var mf = GetComponentInChildren<MeshFilter>();
-            if (mf && mf.sharedMesh) return mf.sharedMesh.bounds;
-            return new Bounds(new Vector3(0f, 1f, 0f), new Vector3(0.3f, 2f, 0.3f));
+            var r = GetComponentInChildren<MeshRenderer>();
+            if (r) return r.bounds;
+            return new Bounds(transform.position + Vector3.up, new Vector3(0.5f, 2f, 0.5f));
         }
 
-        private float PostRadius() { var b = LocalBounds(); return Mathf.Max(b.extents.x, b.extents.z); }
+        private float PostRadius() { var b = WorldBounds(); return Mathf.Min(b.extents.x, b.extents.z); }
 
         public float TieHeight() =>
-            MooringsPlugin.LineHeight.Value >= 0f ? MooringsPlugin.LineHeight.Value : LocalBounds().max.y - 0.25f;
+            MooringsPlugin.LineHeight.Value >= 0f ? MooringsPlugin.LineHeight.Value : WorldBounds().max.y - transform.position.y - 0.4f;
 
         /// A few turns of rope around the post where the line ties on, drawn as a helix.
         private void MakeCoil()
@@ -46,8 +46,7 @@ namespace Moorings
             if (renderer) coil.material = renderer.sharedMaterial;
 
             const int turns = 4, perTurn = 32;
-            // The log mesh reports bounds well outside the visible wood; about 45% of that sits on it.
-            float r = MooringsPlugin.CoilRadius.Value > 0f ? MooringsPlugin.CoilRadius.Value : PostRadius() * 0.45f + 0.02f;
+            float r = MooringsPlugin.CoilRadius.Value > 0f ? MooringsPlugin.CoilRadius.Value : PostRadius() + 0.02f;
             float h = TieHeight();
             float pitch = 0.055f;
             coil.positionCount = turns * perTurn + 1;
