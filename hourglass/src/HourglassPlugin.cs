@@ -117,6 +117,28 @@ namespace Hourglass
 
     public class HourglassPiece : MonoBehaviour, Interactable, Hoverable
     {
+        static readonly System.Collections.Generic.List<HourglassPiece> All = new System.Collections.Generic.List<HourglassPiece>();
+
+        private void Awake()
+        {
+            All.Add(this);
+            var wnt = GetComponent<WearNTear>();
+            if (wnt) wnt.m_onDestroyed += OnDestroyed;
+        }
+
+        private void OnDestroy() => All.Remove(this);
+
+        /// Smashed or picked up: if it was the last one around, time flows again.
+        private void OnDestroyed()
+        {
+            All.Remove(this);
+            if (All.Count == 0 && HourglassPlugin.IsHeld)
+            {
+                ZoneSystem.instance.RemoveGlobalKey(HourglassPlugin.Key);
+                Player.m_localPlayer?.Message(MessageHud.MessageType.Center, "Time flows again");
+            }
+        }
+
         public bool Interact(Humanoid user, bool hold, bool alt)
         {
             if (hold) return false;
