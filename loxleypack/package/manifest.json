@@ -1,6 +1,6 @@
 {
   "name": "LoxleyPack",
-  "version_number": "2.0.0",
+  "version_number": "2.0.1",
   "website_url": "https://github.com/loxleygames/valheim-mods",
   "description": "Every Loxley mod in one install: quick stack, craft from chests, shared chests, armour slots, comfy fishing, returning spears, trophy pouch, moorings, hourglass, no armour speed penalty.",
   "dependencies": [
@@ -11,7 +11,7 @@
     "Loxley-Unburdened-0.1.0",
     "Loxley-Gungnir-0.1.1",
     "Loxley-TrophyPouch-0.1.2",
-    "Loxley-InventoryReforged-0.1.0",
+    "Loxley-InventoryReforged-0.1.1",
     "Loxley-ComfyFishing-0.1.0"
   ]
 }
