@@ -49,7 +49,8 @@ namespace TrophyPouch
         {
             if (s_panel) return;
             var gui = InventoryGui.instance;
-            s_panel = GUIManager.Instance.CreateWoodpanel(gui.m_player, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(240f, 0f), 300f, gui.m_player.rect.height, false);
+            float height = TrophyPouchPlugin.PanelHeight.Value;
+            s_panel = GUIManager.Instance.CreateWoodpanel(gui.m_player, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(240f, 0f), 300f, height, false);
             s_panel.name = "TrophyPouchPanel";
             // Hang it off the inventory's top-right corner so its top is level with the inventory.
             var prt = s_panel.GetComponent<RectTransform>();
@@ -57,7 +58,7 @@ namespace TrophyPouch
             prt.anchoredPosition = new Vector2(90f, 0f);
             GUIManager.Instance.CreateText("Trophies", s_panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -22f),
                 GUIManager.Instance.AveriaSerifBold, 20, GUIManager.Instance.ValheimOrange, true, Color.black, 260f, 30f, false);
-            var scroll = GUIManager.Instance.CreateScrollView(s_panel.transform, false, true, 8f, 4f, GUIManager.Instance.ValheimScrollbarHandleColorBlock, new Color(0f, 0f, 0f, 0.3f), 270f, gui.m_player.rect.height - 60f);
+            var scroll = GUIManager.Instance.CreateScrollView(s_panel.transform, false, true, 8f, 4f, GUIManager.Instance.ValheimScrollbarHandleColorBlock, new Color(0f, 0f, 0f, 0.3f), 270f, height - 60f);
             var srt = scroll.GetComponent<RectTransform>();
             srt.anchorMin = srt.anchorMax = new Vector2(0.5f, 1f);
             srt.pivot = new Vector2(0.5f, 1f);
@@ -86,8 +87,8 @@ namespace TrophyPouch
 
             var row = new GameObject(prefab, typeof(RectTransform), typeof(LayoutElement));
             row.transform.SetParent(s_content, false);
-            row.GetComponent<LayoutElement>().preferredHeight = 40f;
-            row.GetComponent<RectTransform>().sizeDelta = new Vector2(250f, 40f);
+            row.GetComponent<LayoutElement>().preferredHeight = 36f;
+            row.GetComponent<RectTransform>().sizeDelta = new Vector2(250f, 36f);
 
             var iconGo = new GameObject("icon", typeof(RectTransform), typeof(Image));
             iconGo.transform.SetParent(row.transform, false);
