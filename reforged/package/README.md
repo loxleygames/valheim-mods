@@ -6,7 +6,7 @@ Four things your inventory should have had. Built for playing with friends, and 
 |---|---|
 | **Stash** | One key sends your loot into the nearby chests that already hold it |
 | **Craft from chests** | Workbench, forge, building, smelters, kilns, fires, cooking, fermenters all draw on nearby chests |
-| **Shared chests** | Two players can use the same chest at the same time |
+| **Shared chests** | Any number of players can use the same chest at the same time |
 | **Armour slots** | Head / Chest / Legs / Cape / Utility in their own row, still repairable |
 
 Each feature can be switched off in the config.
