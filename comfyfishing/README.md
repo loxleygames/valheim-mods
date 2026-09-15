@@ -4,6 +4,10 @@ Fishing without the tug-of-war.
 
 Haldor's rod is what it always was: the stamina tug-of-war. Craft a better rod and fishing changes. Cast, wait, and when something bites you get a proper moment to click (1.5s, not half a second). Then the fish reels itself in — no stamina, no escaping, no snapped line. Bigger fish take longer; higher fishing skill and a better rod bring them in faster. Skill still levels while you reel.
 
+## Bait
+
+Fishing bait is craftable at the Cauldron: 2 Neck tails → 10 bait, so you don't need Haldor to start. The biome baits are vanilla (20 bait + a trophy at the Cauldron).
+
 ## Tiers
 
 Bait is per biome, so bait is how the catch is gated. Each bait needs a fishing skill level and a rod tier before fish will take it:
