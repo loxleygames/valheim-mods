@@ -110,22 +110,39 @@ namespace ComfyFishing
         }
 
         /// Copy a sprite through a RenderTexture (its texture isn't readable) and multiply by the tint.
+        /// Blits may or may not be flipped depending on the graphics API, so read both ways and keep the
+        /// one with content; if neither has any, keep the original icon rather than show nothing.
         public static Sprite Sprite(Sprite src, Color c)
         {
-            var rect = src.textureRect;
-            var rt = RenderTexture.GetTemporary(src.texture.width, src.texture.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-            var prev = RenderTexture.active;
-            Graphics.Blit(src.texture, rt);
-            RenderTexture.active = rt;
-            var tex = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
-            tex.ReadPixels(new Rect(rect.x, src.texture.height - rect.y - rect.height, rect.width, rect.height), 0, 0);
-            RenderTexture.active = prev;
-            RenderTexture.ReleaseTemporary(rt);
-            var px = tex.GetPixels();
-            for (int i = 0; i < px.Length; i++) px[i] = new Color(px[i].r * c.r, px[i].g * c.g, px[i].b * c.b, px[i].a);
-            tex.SetPixels(px);
-            tex.Apply();
-            return UnityEngine.Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), src.pixelsPerUnit);
+            try
+            {
+                var rect = src.textureRect;
+                var rt = RenderTexture.GetTemporary(src.texture.width, src.texture.height, 0, RenderTextureFormat.ARGB32);
+                var prev = RenderTexture.active;
+                Graphics.Blit(src.texture, rt);
+                RenderTexture.active = rt;
+                int w = (int)rect.width, h = (int)rect.height;
+                var a = new Texture2D(w, h, TextureFormat.RGBA32, false);
+                a.ReadPixels(new Rect(rect.x, rect.y, w, h), 0, 0);
+                var b = new Texture2D(w, h, TextureFormat.RGBA32, false);
+                b.ReadPixels(new Rect(rect.x, src.texture.height - rect.y - h, w, h), 0, 0);
+                RenderTexture.active = prev;
+                RenderTexture.ReleaseTemporary(rt);
+
+                float Alpha(Texture2D t) { float sum = 0f; foreach (var p in t.GetPixels()) sum += p.a; return sum; }
+                float aa = Alpha(a), ab = Alpha(b);
+                if (aa <= 0f && ab <= 0f) return src;
+                var tex = aa >= ab ? a : b;
+                var px = tex.GetPixels();
+                for (int i = 0; i < px.Length; i++) px[i] = new Color(px[i].r * c.r, px[i].g * c.g, px[i].b * c.b, px[i].a);
+                tex.SetPixels(px);
+                tex.Apply();
+                return UnityEngine.Sprite.Create(tex, new Rect(0, 0, w, h), new Vector2(0.5f, 0.5f), src.pixelsPerUnit);
+            }
+            catch
+            {
+                return src;
+            }
         }
     }
 
