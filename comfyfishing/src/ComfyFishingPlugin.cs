@@ -19,6 +19,7 @@ namespace ComfyFishing
         public const string PluginName = "ComfyFishing";
         public const string PluginVersion = "0.1.0";
 
+        public static ConfigEntry<bool> VanillaRodVanillaReel;
         public static ConfigEntry<bool> AutoHook;
         public static ConfigEntry<float> HookWindow;
         public static ConfigEntry<float> ReelSpeed;
@@ -28,6 +29,7 @@ namespace ComfyFishing
 
         private void Awake()
         {
+            VanillaRodVanillaReel = Config.Bind("Reel", "VanillaRodVanillaReel", true, "Haldor's fishing rod keeps the vanilla tug-of-war; only crafted rods get the comfy reel.");
             AutoHook = Config.Bind("Reel", "AutoHook", false, "Hook the fish the moment it bites, no click needed.");
             HookWindow = Config.Bind("Reel", "HookWindow", 1.5f, "Seconds after a bite in which a click hooks the fish (vanilla: 0.5).");
             ReelSpeed = Config.Bind("Reel", "ReelSpeed", 1.5f, "Metres of line per second once hooked, at fishing skill 0.");

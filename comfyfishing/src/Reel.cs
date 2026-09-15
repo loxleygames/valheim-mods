@@ -41,6 +41,9 @@ namespace ComfyFishing
                 var owner = Owner(f);
                 if (!owner) return true;
 
+                // Haldor's rod keeps the vanilla fight; the comfy reel is what the crafted rods are for.
+                if (ComfyFishingPlugin.VanillaRodVanillaReel.Value && Rods.TierOf(owner) <= 1) return true;
+
                 var fish = f.GetCatch();
                 if (!fish)
                 {

@@ -2,7 +2,7 @@
 
 Fishing without the tug-of-war.
 
-Cast. Wait. When something bites you get a proper moment to click (1.5s, not half a second). Then the fish reels itself in — no stamina, no escaping, no snapped line. Bigger fish take longer; higher fishing skill and a better rod bring them in faster. Skill still levels while you reel.
+Haldor's rod is what it always was: the stamina tug-of-war. Craft a better rod and fishing changes. Cast, wait, and when something bites you get a proper moment to click (1.5s, not half a second). Then the fish reels itself in — no stamina, no escaping, no snapped line. Bigger fish take longer; higher fishing skill and a better rod bring them in faster. Skill still levels while you reel.
 
 ## Tiers
 
@@ -31,7 +31,7 @@ Three new rods above Haldor's, all craftable:
 | Silver fishing rod | Forge 2 | 10 Fine wood, 4 Silver, 2 Guck | 150 |
 | Black metal fishing rod | Forge 3 | 10 Fine wood, 5 Black metal, 5 Linen thread | 200 |
 
-Each tier reels 20% faster. Crafted rods **wear one point per cast** and can be **upgraded to level 4** at their station: each level adds durability and another 10% reel speed. Haldor's rod never wears but stays slow — that's the trade.
+Each tier reels 20% faster. Crafted rods **wear one point per cast** and can be **upgraded to level 4** at their station: each level adds durability and another 10% reel speed. Haldor's rod never wears, but it never gets comfy either.
 
 ## Config
 
