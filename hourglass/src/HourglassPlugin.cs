@@ -74,6 +74,23 @@ namespace Hourglass
             var stone = wardRenderer ? wardRenderer.sharedMaterial : null;
             foreach (var r in prefab.GetComponentsInChildren<MeshRenderer>(true)) r.enabled = false;
 
+            // The Ward's yellow glow, turned cold blue.
+            var blue = new Color(0.35f, 0.6f, 1f);
+            foreach (var light in prefab.GetComponentsInChildren<Light>(true)) light.color = blue;
+            foreach (var ps in prefab.GetComponentsInChildren<ParticleSystem>(true))
+            {
+                var main = ps.main;
+                main.startColor = blue;
+            }
+            foreach (var r in prefab.GetComponentsInChildren<Renderer>(true))
+            {
+                if (r is MeshRenderer || !r.sharedMaterial) continue;
+                var m = new Material(r.sharedMaterial);
+                if (m.HasProperty("_Color")) m.color = blue;
+                if (m.HasProperty("_TintColor")) m.SetColor("_TintColor", blue);
+                r.sharedMaterial = m;
+            }
+
             var root = new GameObject("hourglass");
             root.transform.SetParent(prefab.transform, false);
             root.layer = prefab.layer;
