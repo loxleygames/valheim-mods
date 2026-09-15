@@ -146,14 +146,18 @@ namespace InventoryReforged
             button.onClick.AddListener(() => { if (Player.m_localPlayer) Stash.Run(Player.m_localPlayer); });
 
             var tmp = button.GetComponentInChildren<TMPro.TMP_Text>();
-            if (tmp) tmp.text = "Stash";
+            if (tmp) { tmp.text = "»"; tmp.alignment = TMPro.TextAlignmentOptions.Center; tmp.enableAutoSizing = false; tmp.fontSize = 22f; }
             var legacy = button.GetComponentInChildren<Text>();
-            if (legacy) legacy.text = "Stash";
+            if (legacy) legacy.text = "»";
 
+            // A small square in the header band, next to the panel title, clear of the grid.
             var rt = button.GetComponent<RectTransform>();
             rt.anchorMin = rt.anchorMax = new Vector2(1f, 1f);
             rt.pivot = new Vector2(1f, 1f);
+            rt.sizeDelta = new Vector2(Plugin.StashButtonSize.Value, Plugin.StashButtonSize.Value);
             rt.anchoredPosition = new Vector2(Plugin.StashButtonX.Value, Plugin.StashButtonY.Value);
+            var tip = button.GetComponent<UITooltip>();
+            if (tip) { tip.m_text = "Stash to nearby chests"; tip.m_topic = ""; }
         }
     }
 }
