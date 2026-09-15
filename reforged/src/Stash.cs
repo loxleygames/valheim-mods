@@ -66,7 +66,7 @@ namespace InventoryReforged
         /// Which of the player's items are allowed to leave: not equipped, not favourited, not hotbar (if configured).
         public static bool CanLeave(ItemDrop.ItemData item, bool respectHotbar)
         {
-            if (item.m_equipped || Favourites.Is(item)) return false;
+            if (item.m_equipped || Favourites.Is(item) || SharedChest.IsLocked(item)) return false;
             if (respectHotbar && Plugin.StashKeepHotbar.Value && item.m_gridPos.y == 0) return false;
             return true;
         }
@@ -98,6 +98,13 @@ namespace InventoryReforged
         {
             if (!Stash.Pending.Remove(__instance)) return true;
             if (!granted || !Player.m_localPlayer) return false;
+            var nview = __instance.GetComponent<ZNetView>();
+            if (nview && nview.IsValid() && !nview.IsOwner())
+            {
+                // Someone has it open: the owner kept ownership, so each stack goes through them.
+                SharedChest.PutMatching(__instance, Player.m_localPlayer.GetInventory());
+                return false;
+            }
             int n = Stash.StackInto(__instance.GetInventory(), Player.m_localPlayer.GetInventory());
             if (n > 0)
             {
