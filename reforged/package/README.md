@@ -19,7 +19,7 @@ Press **P** (or the **»** button under the weight readout on your inventory) an
 
 Never moved: equipped gear, favourites, and the hotbar (configurable).
 
-**Alt+click** an item to favourite it. It gets a ★ and is skipped by Stash and by the chest's own "Place stacks" button.
+Hover an item and press **F** (or Alt+click) to favourite it. It gets a ★ and is skipped by Stash and by the chest's own "Place stacks" button.
 
 *How it stays safe in multiplayer:* each chest is asked through the game's own "Place stacks" request. The chest's current owner checks nobody has it open and hands it over before anything moves. Other players don't need the mod for this.
 

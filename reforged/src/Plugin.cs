@@ -20,6 +20,7 @@ namespace InventoryReforged
         public static ConfigEntry<float> StashRange;
         public static ConfigEntry<bool> StashKeepHotbar;
         public static ConfigEntry<bool> StashPlayerBuiltOnly;
+        public static ConfigEntry<KeyboardShortcut> FavouriteKey;
         public static ConfigEntry<bool> StashButton;
         public static ConfigEntry<float> StashButtonX;
         public static ConfigEntry<float> StashButtonY;
@@ -36,6 +37,7 @@ namespace InventoryReforged
             StashRange = Config.Bind("Stash", "Range", 10f, "How far (m) to look for chests.");
             StashKeepHotbar = Config.Bind("Stash", "KeepHotbar", true, "Leave items on the hotbar alone.");
             StashPlayerBuiltOnly = Config.Bind("Stash", "PlayerBuiltOnly", true, "Ignore chests you didn't build (dungeon chests, etc).");
+            FavouriteKey = Config.Bind("Stash", "FavouriteKey", new KeyboardShortcut(KeyCode.F), "Press while hovering an item to favourite it (Alt+click also works where the desktop lets it through).");
             StashButton = Config.Bind("Stash", "ShowButton", true, "Add a Stash button to the inventory screen.");
             StashButtonX = Config.Bind("Stash", "ButtonX", 33f, "Button centre, relative to the bottom-right corner of the inventory panel.");
             StashButtonY = Config.Bind("Stash", "ButtonY", 8f, "Button centre, relative to the bottom-right corner of the inventory panel.");

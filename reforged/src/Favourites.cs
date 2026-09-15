@@ -35,6 +35,22 @@ namespace InventoryReforged
             }
         }
 
+        /// Hover an item and press the favourite key. Alt+click never reaches the game on some desktops
+        /// (Linux window managers grab it), so this is the reliable route.
+        [HarmonyPatch(typeof(InventoryGrid), "UpdateGui")]
+        static class ToggleOnKey
+        {
+            static void Postfix(InventoryGrid __instance, Player player)
+            {
+                if (!player || !Plugin.FavouriteKey.Value.IsDown()) return;
+                if (__instance.GetInventory() != player.GetInventory()) return;
+                var el = Traverse.Create(__instance).Method("GetHoveredElement").GetValue<InventoryElement>();
+                if (!el) return;
+                var item = __instance.GetInventory().GetItemAt(el.Position.x, el.Position.y);
+                if (item != null) Toggle(item);
+            }
+        }
+
         /// A small star on favourited items, cloned from the hotbar number label each slot already has.
         [HarmonyPatch(typeof(InventoryGrid), "UpdateGui")]
         static class DrawStar
