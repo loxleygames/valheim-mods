@@ -26,6 +26,8 @@ namespace InventoryReforged
         public static ConfigEntry<float> StashButtonSize;
         public static ConfigEntry<bool> SharedChests;
         public static ConfigEntry<bool> ArmourSlots;
+        public static ConfigEntry<bool> CraftFromChests;
+        public static ConfigEntry<float> CraftRange;
         public static ConfigEntry<bool> DebugLayout;
 
         private void Awake()
@@ -41,6 +43,8 @@ namespace InventoryReforged
             SharedChests = Config.Bind("SharedChests", "Enabled", true, "Let more than one player use a chest at the same time. Everyone needs the mod.");
             ArmourSlots = Config.Bind("ArmourSlots", "Enabled", true, "Extra row with head / chest / legs / cape slots.");
 
+            CraftFromChests = Config.Bind("CraftFromChests", "Enabled", true, "Crafting, building and stations (smelter, kiln, fire, cooking, fermenter) use items from nearby chests.");
+            CraftRange = Config.Bind("CraftFromChests", "Range", 15f, "How far (m) to look for chests when crafting.");
             DebugLayout = Config.Bind("Debug", "DumpLayout", false, "Log the inventory panel hierarchy once when the inventory opens.");
 
             new Harmony(PluginGUID).PatchAll();
