@@ -1,0 +1,10 @@
+{
+  "name": "Hourglass",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/hourglass",
+  "description": "A buildable hourglass that holds the sun at noon while you build. Use it again to let time flow.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350",
+    "ValheimModding-Jotunn-2.30.0"
+  ]
+}

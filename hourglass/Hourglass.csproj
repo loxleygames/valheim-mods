@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Hourglass</AssemblyName>
+    <RootNamespace>Hourglass</RootNamespace>
+  </PropertyGroup>
+</Project>
