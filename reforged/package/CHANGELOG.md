@@ -1,3 +1,6 @@
+# 0.1.1
+- Trinket slot added to the armour row.
+
 # 0.1.0
 - Stash to nearby chests (hotkey / button). Favourite items with F while hovering, or Alt+click.
 - Craft, build and feed stations from nearby chests.

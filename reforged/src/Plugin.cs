@@ -14,7 +14,7 @@ namespace InventoryReforged
     {
         public const string PluginGUID = "games.loxley.inventoryreforged";
         public const string PluginName = "InventoryReforged";
-        public const string PluginVersion = "0.1.0";
+        public const string PluginVersion = "0.1.1";
 
         public static ConfigEntry<KeyboardShortcut> StashKey;
         public static ConfigEntry<float> StashRange;
@@ -43,7 +43,7 @@ namespace InventoryReforged
             StashButtonY = Config.Bind("Stash", "ButtonY", 8f, "Button centre, relative to the bottom-right corner of the inventory panel.");
             StashButtonSize = Config.Bind("Stash", "ButtonSize", 38f, "Button width and height (px).");
             SharedChests = Config.Bind("SharedChests", "Enabled", true, "Let more than one player use a chest at the same time. Everyone needs the mod.");
-            ArmourSlots = Config.Bind("ArmourSlots", "Enabled", true, "Extra row with head / chest / legs / cape slots.");
+            ArmourSlots = Config.Bind("ArmourSlots", "Enabled", true, "Extra row with head / chest / legs / cape / utility / trinket slots.");
 
             CraftFromChests = Config.Bind("CraftFromChests", "Enabled", true, "Crafting, building and stations (smelter, kiln, fire, cooking, fermenter) use items from nearby chests.");
             CraftRange = Config.Bind("CraftFromChests", "Range", 15f, "How far (m) to look for chests when crafting.");

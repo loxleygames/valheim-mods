@@ -22,8 +22,9 @@ namespace InventoryReforged
             ItemDrop.ItemData.ItemType.Legs,
             ItemDrop.ItemData.ItemType.Shoulder,
             ItemDrop.ItemData.ItemType.Utility,
+            ItemDrop.ItemData.ItemType.Trinket,
         };
-        static readonly string[] Labels = { "Head", "Chest", "Legs", "Cape", "Util" };
+        static readonly string[] Labels = { "Head", "Chest", "Legs", "Cape", "Util", "Trinket" };
         static readonly Color SlotTint = new Color(0.85f, 0.7f, 0.45f, 1f);
 
         static readonly AccessTools.FieldRef<Inventory, int> Height = AccessTools.FieldRefAccess<Inventory, int>("m_height");

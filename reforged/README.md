@@ -9,7 +9,7 @@ Built for the 1.0 game and kept current. Also in the box, each switchable in the
 | **Stash** | Quick stack to nearby chests, hotkey or button, with favourites |
 | **Craft from chests** | Workbench, forge, building, smelters, kilns, fires, cooking, fermenters all draw on nearby chests |
 | **Shared chests** | Any number of players can use the same chest at the same time |
-| **Armour slots** | Head / Chest / Legs / Cape / Utility in their own row, still repairable |
+| **Armour slots** | Head / Chest / Legs / Cape / Utility / Trinket in their own row, still repairable |
 
 ---
 
@@ -49,7 +49,7 @@ The one thing a guest can't do is drop an item to the ground straight out of the
 
 ## Armour slots
 
-An extra inventory row appears below your main grid with five labelled, tinted slots: **Head, Chest, Legs, Cape, Util**. Equip a piece and it moves into its slot. Unequip it and it comes back to the main grid. Drop the right piece onto a slot to equip it directly.
+An extra inventory row appears below your main grid with six labelled, tinted slots: **Head, Chest, Legs, Cape, Util, Trinket**. Equip a piece and it moves into its slot. Unequip it and it comes back to the main grid. Drop the right piece onto a slot to equip it directly.
 
 They are real inventory slots, so durability shows and **repair works** exactly as it always has. Weapons, shields and tools are deliberately not given slots.
 
