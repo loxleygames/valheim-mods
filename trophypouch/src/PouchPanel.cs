@@ -130,8 +130,10 @@ namespace TrophyPouch
                 if (el.m_selected) el.m_selected.SetActive(false);
                 if (el.m_tooltip)
                 {
-                    el.m_tooltip.m_topic = Localization.instance.Localize(item.m_shared.m_name);
-                    el.m_tooltip.m_text = Localization.instance.Localize(item.m_shared.m_description) + "\n\n<color=orange>" + count + "</color> in pouch. Click to take one.";
+                    // Anchor the tooltip where the inventory anchors its own, outside the scroll view's mask.
+                    el.m_tooltip.Set(Localization.instance.Localize(item.m_shared.m_name),
+                        Localization.instance.Localize(item.m_shared.m_description) + "\n\n<color=orange>" + count + "</color> in pouch. Click to take one.",
+                        InventoryGui.instance.m_playerGrid.m_tooltipAnchor);
                 }
             }
             var binding = slot.transform.Find("binding");
