@@ -96,8 +96,13 @@ namespace Hourglass
                 Part(root, PrimitiveType.Cylinder, new Vector3(Mathf.Cos(a) * 0.21f, 0.42f, Mathf.Sin(a) * 0.21f), new Vector3(0.05f, 0.34f, 0.05f), wood);
             }
             Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.21f, 0f), new Vector3(0.24f, 0.16f, 0.24f), sand);
-            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.30f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
-            Part(root, PrimitiveType.Sphere, new Vector3(0f, 0.54f, 0f), new Vector3(0.34f, 0.38f, 0.34f), glass);
+            // One vessel: a pinched profile revolved round the axis.
+            Lathe(root, "glass", glass, new[]
+            {
+                (0.08f, 0.10f), (0.12f, 0.15f), (0.20f, 0.175f), (0.30f, 0.14f), (0.38f, 0.06f),
+                (0.42f, 0.03f),
+                (0.46f, 0.06f), (0.54f, 0.14f), (0.64f, 0.175f), (0.72f, 0.15f), (0.76f, 0.10f),
+            });
         }
 
         static string Describe(Material m) => m ? $"{m.name}/{m.shader.name}/tex={(m.mainTexture ? m.mainTexture.name : "none")}" : "null";
@@ -116,6 +121,70 @@ namespace Hourglass
                     fallback = fallback ? fallback : m;
                 }
             return fallback;
+        }
+
+        /// Revolve a (height, radius) profile into a closed mesh. Smoothed with Catmull-Rom so the
+        /// hand-placed points become a curve.
+        static void Lathe(GameObject parent, string name, Material mat, (float y, float r)[] profile)
+        {
+            const int segments = 28, perSpan = 4;
+            var pts = new System.Collections.Generic.List<Vector2>();
+            for (int i = 0; i < profile.Length - 1; i++)
+            {
+                Vector2 P(int k) { k = Mathf.Clamp(k, 0, profile.Length - 1); return new Vector2(profile[k].r, profile[k].y); }
+                Vector2 p0 = P(i - 1), p1 = P(i), p2 = P(i + 1), p3 = P(i + 2);
+                for (int j = 0; j < perSpan; j++)
+                {
+                    float t = j / (float)perSpan, t2 = t * t, t3 = t2 * t;
+                    pts.Add(0.5f * ((2f * p1) + (-p0 + p2) * t + (2f * p0 - 5f * p1 + 4f * p2 - p3) * t2 + (-p0 + 3f * p1 - 3f * p2 + p3) * t3));
+                }
+            }
+            pts.Add(new Vector2(profile[profile.Length - 1].r, profile[profile.Length - 1].y));
+
+            int rings = pts.Count;
+            var verts = new System.Collections.Generic.List<Vector3>();
+            var uvs = new System.Collections.Generic.List<Vector2>();
+            var tris = new System.Collections.Generic.List<int>();
+            for (int ring = 0; ring < rings; ring++)
+                for (int sgm = 0; sgm <= segments; sgm++)
+                {
+                    float a = sgm / (float)segments * Mathf.PI * 2f;
+                    verts.Add(new Vector3(Mathf.Cos(a) * pts[ring].x, pts[ring].y, Mathf.Sin(a) * pts[ring].x));
+                    uvs.Add(new Vector2(sgm / (float)segments, ring / (float)(rings - 1)));
+                }
+            int stride = segments + 1;
+            for (int ring = 0; ring < rings - 1; ring++)
+                for (int sgm = 0; sgm < segments; sgm++)
+                {
+                    int a = ring * stride + sgm, b = a + 1, c = a + stride, d = c + 1;
+                    tris.AddRange(new[] { a, c, b, b, c, d });
+                }
+            // Flat caps top and bottom.
+            foreach (int ring in new[] { 0, rings - 1 })
+            {
+                int centre = verts.Count;
+                verts.Add(new Vector3(0f, pts[ring].y, 0f));
+                uvs.Add(new Vector2(0.5f, 0.5f));
+                for (int sgm = 0; sgm < segments; sgm++)
+                {
+                    int a = ring * stride + sgm, b = a + 1;
+                    if (ring == 0) tris.AddRange(new[] { centre, b, a }); else tris.AddRange(new[] { centre, a, b });
+                }
+            }
+
+            var mesh = new Mesh { name = name };
+            mesh.SetVertices(verts);
+            mesh.SetUVs(0, uvs);
+            mesh.SetTriangles(tris, 0);
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+
+            var go = new GameObject(name);
+            go.layer = parent.layer;
+            go.transform.SetParent(parent.transform, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var mr = go.AddComponent<MeshRenderer>();
+            if (mat) mr.sharedMaterial = mat;
         }
 
         static void Part(GameObject parent, PrimitiveType type, Vector3 pos, Vector3 scale, Material mat)
