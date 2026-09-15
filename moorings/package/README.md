@@ -1,6 +1,6 @@
 # Moorings
 
-Valheim mod. Adds a **Mooring post** (Hammer → Misc, 6 Wood + 2 Resin at a Workbench).
+Valheim mod. Adds a **Mooring post** (Hammer → Misc, 2 Core wood + 2 Resin at a Workbench): a log bollard with rope coiled round the top.
 
 Interact with it to tie the nearest boat (within 12m). While moored the boat:
 

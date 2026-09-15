@@ -1,4 +1,5 @@
 # 0.1.1
+- Post is now a log bollard with rope coiled round the top. Costs 2 Core wood + 2 Resin.
 - Fixed moorings breaking after a world reload (boat showed as moored, rope gone, couldn't cast off). Post and boat are now linked by a shared tag rather than object IDs, which the game reassigns on load. Boats moored before this update need tying again.
 - A post whose boat is gone can be interacted with to clear it.
 

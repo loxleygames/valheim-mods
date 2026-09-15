@@ -22,6 +22,7 @@ namespace Moorings
         public static ConfigEntry<float> Slack;
         public static ConfigEntry<float> Pull;
         public static ConfigEntry<float> LineHeight;
+        public static ConfigEntry<float> CoilRadius;
 
         private void Awake()
         {
@@ -34,6 +35,8 @@ namespace Moorings
 
             LineHeight = Config.Bind("General", "LineHeight", 0.7f,
                 "How high up the post (m) the line is tied.");
+            CoilRadius = Config.Bind("General", "CoilRadius", 0.17f,
+                "Radius (m) of the rope coiled round the post. Match it to the post's thickness.");
 
             PrefabManager.OnVanillaPrefabsAvailable += AddMooringPost;
             new Harmony(PluginGUID).PatchAll();
@@ -41,7 +44,9 @@ namespace Moorings
 
         private void AddMooringPost()
         {
-            var prefab = PrefabManager.Instance.CreateClonedPrefab(PrefabName, "wood_pole2");
+            // Log pole 2m: fatter and rougher than the plain pole, reads as a bollard.
+            var prefab = PrefabManager.Instance.CreateClonedPrefab(PrefabName, "wood_pole_log")
+                      ?? PrefabManager.Instance.CreateClonedPrefab(PrefabName, "wood_pole2");
             prefab.AddComponent<MooringPost>();
 
             var piece = new CustomPiece(prefab, fixReference: true, new PieceConfig
@@ -53,7 +58,7 @@ namespace Moorings
                 CraftingStation = CraftingStations.Workbench,
                 Requirements = new[]
                 {
-                    new RequirementConfig("Wood", 6, 0, true),
+                    new RequirementConfig("RoundLog", 2, 0, true),
                     new RequirementConfig("Resin", 2, 0, true),
                 }
             });

@@ -16,6 +16,33 @@ namespace Moorings
             var wnt = GetComponent<WearNTear>();
             if (wnt) wnt.m_onDestroyed += OnPostDestroyed;
             All.Add(this);
+            MakeCoil();
+        }
+
+        /// A few turns of rope around the post where the line ties on, drawn as a helix.
+        private void MakeCoil()
+        {
+            var go = new GameObject("coil");
+            go.transform.SetParent(transform, false);
+            var coil = go.AddComponent<LineRenderer>();
+            coil.useWorldSpace = false;
+            coil.loop = false;
+            coil.startWidth = coil.endWidth = 0.05f;
+            coil.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            var renderer = GetComponentInChildren<MeshRenderer>();
+            if (renderer) coil.material = renderer.sharedMaterial;
+
+            const int turns = 4, perTurn = 32;
+            float r = MooringsPlugin.CoilRadius.Value;
+            float h = MooringsPlugin.LineHeight.Value;
+            float pitch = 0.055f;
+            coil.positionCount = turns * perTurn + 1;
+            for (int i = 0; i <= turns * perTurn; i++)
+            {
+                float a = i / (float)perTurn * Mathf.PI * 2f;
+                float y = h - (turns * pitch) / 2f + (i / (float)perTurn) * pitch;
+                coil.SetPosition(i, new Vector3(Mathf.Cos(a) * r, y, Mathf.Sin(a) * r));
+            }
         }
 
         private void OnDestroy() => All.Remove(this);
