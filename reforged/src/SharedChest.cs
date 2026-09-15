@@ -318,13 +318,12 @@ namespace InventoryReforged
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.MoveItemToThis), typeof(Inventory), typeof(ItemDrop.ItemData))]
         static class RouteQuickMove
         {
-            static bool Prefix(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item, ref bool __result)
+            static bool Prefix(Inventory __instance, Inventory fromInventory, ItemDrop.ItemData item)
             {
-                if (IsGuest(__instance, out var c)) { Put(c, fromInventory, item, item.m_stack, -1, -1); __result = true; return false; }
+                if (IsGuest(__instance, out var c)) { Put(c, fromInventory, item, item.m_stack, -1, -1); return false; }
                 if (IsGuest(fromInventory, out var c2))
                 {
                     if (__instance.CanAddItem(item)) Take(c2, item, item.m_stack, __instance, -1, -1);
-                    __result = true;
                     return false;
                 }
                 return true;
