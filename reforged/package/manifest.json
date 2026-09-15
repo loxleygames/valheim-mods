@@ -2,7 +2,7 @@
   "name": "InventoryReforged",
   "version_number": "0.1.0",
   "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/reforged",
-  "description": "Stash to nearby chests, shared chests for co-op, and armour slots. Multiplayer-safe.",
+  "description": "Stash to chests, craft from chests, shared chests for co-op, and armour slots. Multiplayer-safe.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2350"
   ]
