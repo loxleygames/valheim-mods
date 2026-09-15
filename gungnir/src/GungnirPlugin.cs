@@ -12,7 +12,7 @@ namespace Gungnir
     {
         public const string PluginGUID = "games.loxley.gungnir";
         public const string PluginName = "Gungnir";
-        public const string PluginVersion = "0.1.0";
+        public const string PluginVersion = "0.1.1";
 
         public static ConfigEntry<float> Delay;
         public static ConfigEntry<float> OnlyBeyond;

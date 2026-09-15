@@ -2,7 +2,7 @@
 
 Thrown spears come back.
 
-Throw a spear and a moment after it lands — in a deer, on a cliff, at the bottom of the fjord — it returns to the slot it left, re-equipped if it was in your hand. Durability wear from the throw still applies; if your bag is full it stays where it fell.
+Throw a spear and a moment after it lands — in a deer, on a cliff, at the bottom of the fjord — it returns to the slot it left, re-equipped if it was in your hand. Durability wear from the throw still applies; if your bag is full it stays where it fell. Log out mid-throw and it's in your bag when you're back; log out before it's returned and it comes home when you next load in near it.
 
 Works with every throwable weapon that drops itself on landing, so spears from any mod too.
 
