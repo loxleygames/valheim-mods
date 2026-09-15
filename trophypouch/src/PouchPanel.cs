@@ -136,10 +136,9 @@ namespace TrophyPouch
                 if (el.m_selected) el.m_selected.SetActive(false);
                 if (el.m_tooltip)
                 {
-                    // Anchor the tooltip where the inventory anchors its own, outside the scroll view's mask.
+                    // No anchor: the tooltip pops beside the hovered slot, on the main canvas, above everything.
                     el.m_tooltip.Set(Localization.instance.Localize(item.m_shared.m_name),
-                        Localization.instance.Localize(item.m_shared.m_description) + "\n\n<color=orange>" + count + "</color> in pouch. Click to take one.",
-                        InventoryGui.instance.m_playerGrid.m_tooltipAnchor);
+                        Localization.instance.Localize(item.m_shared.m_description) + "\n\n<color=orange>" + count + "</color> in pouch. Click to take one.");
                 }
             }
             var binding = slot.transform.Find("binding");
