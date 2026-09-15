@@ -65,7 +65,7 @@ namespace Gungnir
 
             if (WasEquipped) player.EquipItem(item, triggerEquipEffects: false);
             if (GungnirPlugin.ShowMessage.Value)
-                player.Message(MessageHud.MessageType.TopLeft, "$msg_picked_up " + item.m_shared.m_name, 1, item.GetIcon());
+                player.Message(MessageHud.MessageType.TopLeft, "Returned: " + Localization.instance.Localize(item.m_shared.m_name), 0, item.GetIcon());
             m_nview.Destroy();
         }
     }
