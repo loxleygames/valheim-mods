@@ -1,0 +1,10 @@
+{
+  "name": "Errands",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/loxleygames/valheim-mods/tree/main/errands",
+  "description": "Dvergr in the ruins hand out daily errands. Earn marks, chests, 35 named uniques and standing with each biome. MMO-shaped play on top of the sandbox.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350",
+    "ValheimModding-Jotunn-2.30.0"
+  ]
+}

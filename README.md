@@ -6,11 +6,12 @@ Paths to the Steam install and BepInEx live in `Directory.Build.props`.
 
 | Mod | What |
 |-----|------|
-| [moorings](moorings/) | Mooring post — tie a boat to it and it can't be damaged |
-| [loxleypack](loxleypack/) | LoxleyPack — modpack of all of the above |
-| [comfyfishing](comfyfishing/) | Comfy Fishing — no tug-of-war, skill and rod tiers |
-| [gungnir](gungnir/) | Gungnir — thrown spears return to your hand |
-| [hourglass](hourglass/) | Hourglass — hold the sun at noon while you build |
-| [trophypouch](trophypouch/) | Trophy Pouch — trophies tallied on the character, not the bag |
-| [unburdened](unburdened/) | Unburdened — no movement penalty from armour |
-| [reforged](reforged/) | Inventory Reforged — stash to nearby chests, shared chests, armour slots |
+| [moorings](moorings/) | Mooring post: tie a boat to it and it can't be damaged |
+| [loxleypack](loxleypack/) | LoxleyPack: modpack of all of the above |
+| [comfyfishing](comfyfishing/) | Comfy Fishing: no tug-of-war, skill and rod tiers |
+| [gungnir](gungnir/) | Gungnir: thrown spears return to your hand |
+| [hourglass](hourglass/) | Hourglass: hold the sun at noon while you build |
+| [trophypouch](trophypouch/) | Trophy Pouch: trophies tallied on the character, not the bag |
+| [unburdened](unburdened/) | Unburdened: no movement penalty from armour |
+| [reforged](reforged/) | Inventory Reforged: stash to nearby chests, shared chests, armour slots |
+| [errands](errands/) | Errands: dvergr in the ruins hand out daily errands; marks, chests, uniques, standing |
