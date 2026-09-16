@@ -1,3 +1,6 @@
+# 2.1.0
+- Errands 0.1.0 added.
+
 # 2.0.1
 - Inventory Reforged 0.1.1 (trinket slot).
 

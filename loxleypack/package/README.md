@@ -4,6 +4,7 @@ Every Loxley mod in one install. Built for playing Valheim with friends on the c
 
 | Mod | What it does |
 |---|---|
+| **Errands** | Dvergr in the ruins hand out daily errands. Marks, chests, 35 named uniques, standing with each biome |
 | **Inventory Reforged** | Quick stack to nearby chests (working today), craft from chests, shared chests, armour slots |
 | **Comfy Fishing** | No tug-of-war: craft a rod, click on the bite, it reels itself in. Rod tiers, bait tiers |
 | **Gungnir** | Thrown spears return to your hand |
